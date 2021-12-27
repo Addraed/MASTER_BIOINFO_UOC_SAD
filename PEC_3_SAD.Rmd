@@ -1,6 +1,6 @@
 ---
 title: "PEC_3_SAD"
-author: "Manuel Rosario Marín Fernández y Joel Calero Rodriguez"
+author: "Joel Calero Rodriguez y Manuel Rosario Marín Fernández"
 date: "27/12/2021"
 output: html_document
 ---
