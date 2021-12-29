@@ -1,7 +1,7 @@
-# Estudiar la respuesta inmunológica innata ex vivo en dos poblaciones de macrófagos (bazo y peritoneo) frente a diferentes antígenos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, también se le suministró el tratamiento A y B en animales sin cáncer. 
-# - ¿A qué antígeno responden más los macrófagos?
-# - ¿Responden los macrófagos a los mismos antígenos que se encuentran en el peritoneo y en el bazo? 
-# - ¿La presencia de tumor en los animales modifica la respuesta a los distintos antígenos?
+# Estudiar la respuesta inmunologica innata ex vivo en dos poblaciones de macr?fagos (bazo y peritoneo) frente a diferentes ant?genos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, tambi?n se le suministr? el tratamiento A y B en animales sin c?ncer. 
+# - ?A que antigeno responden mas los macrofagos?
+# - ?Responden los macrofagos a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
+# - ?La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
 #   
 #   A: Tratamiento A con tumor
 #   B: Tratamiento A sin tumor
@@ -30,7 +30,7 @@ unique(groupNames) ## Comprobar que los labels estan introducidos correctamente
 
 ## Ejercicio 3
 
-# ¿Cuantos valores N/A se encuentran en la Base de Datos? 
+# ?Cuantos valores N/A se encuentran en la Base de Datos? 
 # Creo que se piden cuestiones como estas
 cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la base de datos") # Contar valores N/A
 
