@@ -1,7 +1,7 @@
 # Estudiar la respuesta inmunologica innata ex vivo en dos poblaciones de macr?fagos (bazo y peritoneo) frente a diferentes ant?genos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, tambi?n se le suministr? el tratamiento A y B en animales sin c?ncer. 
-# - ?A que antigeno responden mas los macrofagos?
-# - ?Responden los macrofagos a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
-# - ?La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
+# - ¿A que antigeno responden mas los macrofagos?
+# - ¿Responden los macrofagos a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
+# - ¿La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
 #   
 #   A: Tratamiento A con tumor
 #   B: Tratamiento A sin tumor
