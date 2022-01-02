@@ -9,21 +9,21 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Apartado 1
+# Apartado 1
 
-### Estudiar la respuesta inmunologica innata ex vivo en dos poblaciones de macr?fagos (bazo y peritoneo) frente a diferentes ant?genos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, tambi?n se le suministr? el tratamiento A y B en animales sin c?ncer. 
-* - ¿A que antigeno responden mas los macrofagos?
-* - ¿Responden los macrofagos a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
-*- ¿La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
+#### Estudiar la respuesta inmunologica innata ex vivo en dos poblaciones de macrofagos (bazo y peritoneo) frente a diferentes antigenos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, tambien se le suministro el tratamiento A y B en animales sin cancer. 
+* ¿A que antigeno responden mas los macrofagos?
+* ¿Responden los macrofagos a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
+* ¿La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
    
-#   A: Tratamiento A con tumor
-#   B: Tratamiento A sin tumor
-#   C: Tratamiento B con tumor
-#   D: Tratamiento B sin tumor
-#   I: Animal control con tumor
-#   J: Animal control sin tumor:
+#####  - A: Tratamiento A con tumor
+#####  - B: Tratamiento A sin tumor
+#####  - C: Tratamiento B con tumor
+#####  - D: Tratamiento B sin tumor
+#####  - I: Animal control con tumor
+#####  - J: Animal control sin tumor:
 
-```{r ej1}
+```{r ej1, echo=FALSE}
 folderPath <- c(getwd(),"/","DataBase_PEC3.csv") ## Leer ruta para cargar base de datos
 csvFile <- paste0(folderPath,collapse = "")
 dataMurine <- read.csv(csvFile,header = TRUE, sep = ",") ## Introducir datos
@@ -48,6 +48,13 @@ unique(groupNames) ## Comprobar que los labels estan introducidos correctamente
 
 ## Apartado 3
 ```{r}
+# ?Cuantos valores N/A se encuentran en la Base de Datos? 
+# Creo que se piden cuestiones como estas
+cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la base de datos") # Contar valores N/A
+
+# Calcular la media de la reestimulacion de cada grupo
+# Boxplot con los valores de reestimulacion por grupos
+
 
 ```
 
