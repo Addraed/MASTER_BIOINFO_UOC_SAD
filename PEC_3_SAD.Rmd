@@ -60,7 +60,44 @@ cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la 
 
 
 ## Apartado 4
+
+#### Realizar un análisis descriptivo de los datos. El análisis debe incluir (tal y como aparece en la Sección 3 de la PEC1) un resumen paramétrico de los datos y su representación gráfica, que mejor defina y complemente cada una de dichas variables. 
 ```{r}
+#cambios de clase a ciertas variables para poder trabajar con ellas, de manera más clara
+dataMurine$Grupo <- factor(dataMurine$Grupo,levels = c("A","B","C","D","I","J")) 
+dataMurine$Región<- factor(dataMurine$Región,levels = c("Peritoneo", "Bazo"))
+dataMurine$Antígeno<- factor(dataMurine$Antígeno,levels = c("1", "2","3"))
+dataMurine=na.omit(dataMurine)# eliminación de valores NA
+summary(dataMurine) #resumen parametrico de las variables
+``` 
+Separamos los diferentes grupos de estudio
+
+```{r}
+dataTrAtumor<-subset(dataMurine,dataMurine$Grupo== 'A'); dataTrAtumor<-dataTrAtumor[-c(2)]
+dataTrAtumorless<-subset(dataMurine,dataMurine$Grupo== 'B'); dataTrAtumorless<-dataTrAtumorless[-c(2)]
+dataTrBtumor<-subset(dataMurine,dataMurine$Grupo== 'C'); dataTrBtumor<-dataTrBtumor[-c(2)]
+dataTrBtumorless<-subset(dataMurine,dataMurine$Grupo== 'D'); dataTrBtumorless<-dataTrBtumorless[-c(2)]
+dataTrCtumor<-subset(dataMurine,dataMurine$Grupo== 'I'); dataTrCtumor<-dataTrCtumor[-c(2)]
+dataTrCtumorless<-subset(dataMurine,dataMurine$Grupo== 'J'); dataTrCtumorless<-dataTrCtumorless[-c(2)]
+```
+### Mostramos por pantalla los parámetrod de dichas variables según los diferentes grupos
+```{r}
+summary(dataTrAtumor);summary(dataTrAtumorless)
+
+summary(dataTrBtumor);summary(dataTrBtumorless)
+
+summary(dataTrCtumor);summary(dataTrCtumorless)
+```
+#### A continuación una representación de las diferentes variables:
+
+``` {r}
+plot(dataMurine$Antígeno, col = "cyan", xlab= "Antígeno") # el número de individuos por antigeno utilizado
+
+plot(dataMurine$Grupo, col = "dark red", xlab= "Grupos") # el numero de individuos de cada grupo
+
+plot(dataMurine$Región,col= "yellow", xlab= "Región") #el numero de individuos por región
+
+plot(dataMurine$Grupo,dataMurine$Reestimulación,col = "green", xlab= "grupo", ylab= "reestimulación") #la reestimulación por cada grupo del estudio
 
 ```
 
