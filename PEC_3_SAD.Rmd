@@ -86,30 +86,15 @@ plot(dataMurine$Región,col= "yellow", xlab= "Región") #el numero de individuos
 plot(dataMurine$Grupo,dataMurine$Reestimulación,type='o', col = "green", xlab= "grupo", ylab= "reestimulación") #la reestimulación por cada grupo del estudio
 ```
 
+
+#### Media por tratamientos (grupos A, B, C, D, I, J):
 ```{r, echo= FALSE}
-cat('Media por tratamientos(grupos A,B,C,D,I,J):')
+
 dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"),labels = c("Tratamiento A con tumor","Tratamiento A sin tumor","Tratamiento B con tumor","Tratamiento B sin tumor","Animal control con tumor","Animal control sin tumor") )  #cambio de los caracteres por labels para mejor lectura de los datos
+
 aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulación por grupo
 
 
-```
-#Separamos los diferentes grupos de estudio
-
-```{r}
-dataTrAtumor<-subset(dataMurine,dataMurine$Grupo== "Tratamiento A con tumor"); dataTrAtumor<-dataTrAtumor[-c(2)]
-dataTrAtumorless<-subset(dataMurine,dataMurine$Grupo== "Tratamiento A sin tumor"); dataTrAtumorless<-dataTrAtumorless[-c(2)]
-dataTrBtumor<-subset(dataMurine,dataMurine$Grupo== "Tratamiento B con tumor"); dataTrBtumor<-dataTrBtumor[-c(2)]
-dataTrBtumorless<-subset(dataMurine,dataMurine$Grupo== "Tratamiento B sin tumor"); dataTrBtumorless<-dataTrBtumorless[-c(2)]
-dataTrCtumor<-subset(dataMurine,dataMurine$Grupo== "Animal control con tumor"); dataTrCtumor<-dataTrCtumor[-c(2)]
-dataTrCtumorless<-subset(dataMurine,dataMurine$Grupo== "Animal control sin tumor"); dataTrCtumorless<-dataTrCtumorless[-c(2)]
-```
-#### Mostramos por pantalla los parámetros de dichas variables según los diferentes grupos
-```{r}
-summary(dataTrAtumor);summary(dataTrAtumorless)
-
-summary(dataTrBtumor);summary(dataTrBtumorless)
-
-summary(dataTrCtumor);summary(dataTrCtumorless)
 ```
 
 
