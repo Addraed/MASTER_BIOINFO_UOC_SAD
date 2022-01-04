@@ -71,24 +71,6 @@ dataMurine$Antígeno<- factor(dataMurine$Antígeno,levels = c("1", "2","3"))
 dataMurine=na.omit(dataMurine)# eliminación de valores NA
 summary(dataMurine) #resumen parametrico de las variables
 ``` 
-#Separamos los diferentes grupos de estudio
-
-```{r}
-dataTrAtumor<-subset(dataMurine,dataMurine$Grupo== 'A'); dataTrAtumor<-dataTrAtumor[-c(2)]
-dataTrAtumorless<-subset(dataMurine,dataMurine$Grupo== 'B'); dataTrAtumorless<-dataTrAtumorless[-c(2)]
-dataTrBtumor<-subset(dataMurine,dataMurine$Grupo== 'C'); dataTrBtumor<-dataTrBtumor[-c(2)]
-dataTrBtumorless<-subset(dataMurine,dataMurine$Grupo== 'D'); dataTrBtumorless<-dataTrBtumorless[-c(2)]
-dataTrCtumor<-subset(dataMurine,dataMurine$Grupo== 'I'); dataTrCtumor<-dataTrCtumor[-c(2)]
-dataTrCtumorless<-subset(dataMurine,dataMurine$Grupo== 'J'); dataTrCtumorless<-dataTrCtumorless[-c(2)]
-```
-### Mostramos por pantalla los parámetrod de dichas variables según los diferentes grupos
-```{r}
-summary(dataTrAtumor);summary(dataTrAtumorless)
-
-summary(dataTrBtumor);summary(dataTrBtumorless)
-
-summary(dataTrCtumor);summary(dataTrCtumorless)
-```
 #### A continuación una representación de las diferentes variables:
 
 ``` {r}
@@ -110,7 +92,24 @@ aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulaci
 
 
 ```
+#Separamos los diferentes grupos de estudio
 
+```{r}
+dataTrAtumor<-subset(dataMurine,dataMurine$Grupo== "Tratamiento A con tumor"); dataTrAtumor<-dataTrAtumor[-c(2)]
+dataTrAtumorless<-subset(dataMurine,dataMurine$Grupo== "Tratamiento A sin tumor"); dataTrAtumorless<-dataTrAtumorless[-c(2)]
+dataTrBtumor<-subset(dataMurine,dataMurine$Grupo== "Tratamiento B con tumor"); dataTrBtumor<-dataTrBtumor[-c(2)]
+dataTrBtumorless<-subset(dataMurine,dataMurine$Grupo== "Tratamiento B sin tumor"); dataTrBtumorless<-dataTrBtumorless[-c(2)]
+dataTrCtumor<-subset(dataMurine,dataMurine$Grupo== "Animal control con tumor"); dataTrCtumor<-dataTrCtumor[-c(2)]
+dataTrCtumorless<-subset(dataMurine,dataMurine$Grupo== "Animal control sin tumor"); dataTrCtumorless<-dataTrCtumorless[-c(2)]
+```
+### Mostramos por pantalla los parámetrod de dichas variables según los diferentes grupos
+```{r}
+summary(dataTrAtumor);summary(dataTrAtumorless)
+
+summary(dataTrBtumor);summary(dataTrBtumorless)
+
+summary(dataTrCtumor);summary(dataTrCtumorless)
+```
 
 
 ## Apartado 5
