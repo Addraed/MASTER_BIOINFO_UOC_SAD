@@ -74,6 +74,7 @@ summary(dataMurine) #resumen parametrico de las variables
 #### A continuación una representación de las diferentes variables:
 
 ``` {r}
+par(mfrow=c(2,2))
 plot(dataMurine$Antígeno, col = "cyan", xlab= "Antígeno") # el número de individuos por antigeno utilizado
 
 
