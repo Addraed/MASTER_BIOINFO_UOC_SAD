@@ -7,6 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
 ```
 
 # Apartado 1
@@ -64,13 +65,13 @@ cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la 
 #### Realizar un análisis descriptivo de los datos. El análisis debe incluir (tal y como aparece en la Sección 3 de la PEC1) un resumen paramétrico de los datos y su representación gráfica, que mejor defina y complemente cada una de dichas variables. 
 ```{r}
 #cambios de clase a ciertas variables para poder trabajar con ellas, de manera más clara
-dataMurine$Grupo <- factor(dataMurine$Grupo,levels = c("A","B","C","D","I","J")) 
+dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"))  
 dataMurine$Región<- factor(dataMurine$Región,levels = c("Peritoneo", "Bazo"))
 dataMurine$Antígeno<- factor(dataMurine$Antígeno,levels = c("1", "2","3"))
 dataMurine=na.omit(dataMurine)# eliminación de valores NA
 summary(dataMurine) #resumen parametrico de las variables
 ``` 
-Separamos los diferentes grupos de estudio
+#Separamos los diferentes grupos de estudio
 
 ```{r}
 dataTrAtumor<-subset(dataMurine,dataMurine$Grupo== 'A'); dataTrAtumor<-dataTrAtumor[-c(2)]
@@ -93,11 +94,20 @@ summary(dataTrCtumor);summary(dataTrCtumorless)
 ``` {r}
 plot(dataMurine$Antígeno, col = "cyan", xlab= "Antígeno") # el número de individuos por antigeno utilizado
 
+
 plot(dataMurine$Grupo, col = "dark red", xlab= "Grupos") # el numero de individuos de cada grupo
 
 plot(dataMurine$Región,col= "yellow", xlab= "Región") #el numero de individuos por región
 
-plot(dataMurine$Grupo,dataMurine$Reestimulación,col = "green", xlab= "grupo", ylab= "reestimulación") #la reestimulación por cada grupo del estudio
+
+plot(dataMurine$Grupo,dataMurine$Reestimulación,type='o', col = "green", xlab= "grupo", ylab= "reestimulación") #la reestimulación por cada grupo del estudio
+```
+
+```{r, echo= FALSE}
+cat('Media por tratamientos(grupos A,B,C,D,I,J):')
+dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"),labels = c("Tratamiento A con tumor","Tratamiento A sin tumor","Tratamiento B con tumor","Tratamiento B sin tumor","Animal control con tumor","Animal control sin tumor") )  #cambio de los caracteres por labels para mejor lectura de los datos
+aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulación por grupo
+
 
 ```
 
