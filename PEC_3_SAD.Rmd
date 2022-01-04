@@ -103,7 +103,7 @@ dataTrBtumorless<-subset(dataMurine,dataMurine$Grupo== "Tratamiento B sin tumor"
 dataTrCtumor<-subset(dataMurine,dataMurine$Grupo== "Animal control con tumor"); dataTrCtumor<-dataTrCtumor[-c(2)]
 dataTrCtumorless<-subset(dataMurine,dataMurine$Grupo== "Animal control sin tumor"); dataTrCtumorless<-dataTrCtumorless[-c(2)]
 ```
-### Mostramos por pantalla los parámetrod de dichas variables según los diferentes grupos
+#### Mostramos por pantalla los parámetros de dichas variables según los diferentes grupos
 ```{r}
 summary(dataTrAtumor);summary(dataTrAtumorless)
 
@@ -114,6 +114,7 @@ summary(dataTrCtumor);summary(dataTrCtumorless)
 
 
 ## Apartado 5
+#### Complementando el apartado anterior, elaborar un análisis de regresión de dos conjuntos de variables (LAB2 y Ejercicio 6 de la PEC1). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada.
 ```{r}
 
 ```
@@ -128,6 +129,8 @@ summary(dataTrCtumor);summary(dataTrCtumorless)
 
 
 ## Apartado 7
+#### Complementando el apartado anterior, elaborar un análisis de regresión de dos conjuntos de variables (LAB2 y Ejercicio 6 de la PEC1). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada.
+
 ```{r}
 
 ```
