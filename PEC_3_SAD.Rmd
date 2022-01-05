@@ -176,7 +176,6 @@ by(data=df_murine,INDICES = df_murine$antigeno_murine,FUN=function(x){lillie.tes
 ```
 
 ```{r}
-library(MASS)
 library(cluster)
 d_agl_murine<-dist(dataMurine,method="euclidean")
 hc_agl_murine<-hclust(d_agl_murine,method="complete") 
@@ -226,14 +225,26 @@ rect.hclust(hc_div_murine,k=10,border=2:10) # por último se asocian los agrupam
 
 
 ```{r}
+grupos<-c(dataMurine$Grupo)
+reestimulacion<-c(dataMurine$Reestimulación)
+df_murine_anova<-data.frame(grupos,reestimulacion) #definimos el conjunto de datos
+head(df_murine_anova,4) #mostramos la información del data frame
 
 ```
 
 ```{r}
-
+table(df_murine_anova$grupo) #número de observaciones por cada grupo
 ```
 
 ```{r}
+
+##Media de pesos por raza
+aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=mean)
+##Desviación típica de pesos por raza
+aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
+
+boxplot(dataMurine$Reestimulación~dataMurine$Grupo, data=dataMurine, id.method="y")
+
 
 ```
 
