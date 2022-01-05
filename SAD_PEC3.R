@@ -135,7 +135,7 @@ dataMurineCorrelacion <- read.csv(csvFileCorrelacion,header = TRUE, sep = ",") #
 dataMurineCorrelacion <- na.omit(dataMurineCorrelacion) #Eliminar valores N/A
 
 dataMurineCorrelacion$Grupo <- NULL # Eliminar para poder hacer la matrix de correlacion
-dataMurineCorrelacion$Ratón <- NULL # Eliminar para poder hacer la matrix de correlacion
+dataMurineCorrelacion$Raton <- NULL # Eliminar para poder hacer la matrix de correlacion
 
 #Cargar paquetes
 library(readxl)
