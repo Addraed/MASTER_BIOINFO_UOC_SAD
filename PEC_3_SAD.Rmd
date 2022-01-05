@@ -243,22 +243,86 @@ aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=mean)
 ##Desviación típica de pesos por raza
 aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
 
+
+
+opar <- par(no.readonly = TRUE)
+
+par(mar = c(5, 5, 4, 14))
 boxplot(dataMurine$Reestimulación~dataMurine$Grupo, data=dataMurine, id.method="y")
+legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
+
+on.exit(par(opar))
+
+```
+
+```{r}
+#Estudio de normalidad
+
+par(mfrow=c(3,3))
+qqnorm(df_murine_anova[df_murine_anova$grupos==1,"reestimulacion"],main=1)
+qqline(df_murine_anova[df_murine_anova$grupos==1,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$grupos==2,"reestimulacion"],main=2)
+qqline(df_murine_anova[df_murine_anova$grupos==2,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$grupos==3,"reestimulacion"],main=3)
+qqline(df_murine_anova[df_murine_anova$grupos==3,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$grupos==4,"reestimulacion"],main=4)
+qqline(df_murine_anova[df_murine_anova$grupos==4,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$grupos==5,"reestimulacion"],main=5)
+qqline(df_murine_anova[df_murine_anova$grupos==5,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"],main=6)
+qqline(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"])
 
 
 ```
 
 ```{r}
+##Test Kolmogorov-Smirnov
+##Instalaremos el paquete nortest que contiene las funciones a aplicar
+require(nortest)
+## Loading required package: nortest
+by(data=df_murine_anova,INDICES =
+df_murine_anova$grupos,FUN=function(x){lillie.test(x$reestimulacion)})
+```
+
+```{r}
+##Test Fligner-Killen diagnosis homocedasticidad
+fligner.test(df_murine_anova$reestimulacion~df_murine_anova$grupos,df_murine_anova)
+```
+
+```{r}
+##Estudio anova
+anova_murine<-aov(df_murine_anova$reestimulacion~df_murine_anova$grupos,data=df_murine_anova)
+summary(anova_murine)
+
+plot(anova_murine)
 
 ```
+
+
+```{r}
+pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$grupos,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
+```
+
 
 ```{r}
 
 ```
 
+
 ```{r}
 
 ```
+
+
+```{r}
+
+```
+
+
+```{r}
+
+```
+
 
 
 
