@@ -66,8 +66,8 @@ cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la 
 ```{r}
 #cambios de clase a ciertas variables para poder trabajar con ellas, de manera más clara
 dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"))  
-dataMurine$Región<- factor(dataMurine$Región,levels = c("Peritoneo", "Bazo"))
-dataMurine$Antígeno<- factor(dataMurine$Antígeno,levels = c("1", "2","3"))
+dataMurine$Region<- factor(dataMurine$Region,levels = c("Peritoneo", "Bazo"))
+dataMurine$Antigeno<- factor(dataMurine$Antigeno,levels = c("1", "2","3"))
 dataMurine=na.omit(dataMurine)# eliminación de valores NA
 summary(dataMurine) #resumen parametrico de las variables
 ``` 
@@ -75,15 +75,15 @@ summary(dataMurine) #resumen parametrico de las variables
 
 ``` {r}
 par(mfrow=c(2,2))
-plot(dataMurine$Antígeno, col = "cyan", xlab= "Antígeno") # el número de individuos por antigeno utilizado
+plot(dataMurine$Antigeno, col = "cyan", xlab= "Antígeno") # el número de individuos por antigeno utilizado
 
 
 plot(dataMurine$Grupo, col = "dark red", xlab= "Grupos") # el numero de individuos de cada grupo
 
-plot(dataMurine$Región,col= "yellow", xlab= "Región") #el numero de individuos por región
+plot(dataMurine$Region,col= "yellow", xlab= "Región") #el numero de individuos por región
 
 
-plot(dataMurine$Grupo,dataMurine$Reestimulación,type='o', col = "green", xlab= "Grupos", ylab= "Reestimulación") #la reestimulación por cada grupo del estudio
+plot(dataMurine$Grupo,dataMurine$Reestimulacion,type='o', col = "green", xlab= "Grupos", ylab= "Reestimulación") #la reestimulación por cada grupo del estudio
 ```
 
 
@@ -110,8 +110,8 @@ summary(dataMurine)
 
 ```{r}
 dataMurine$Grupo<-as.numeric(dataMurine$Grupo)
-dataMurine$Región<-as.numeric(dataMurine$Región)
-dataMurine$Antígeno<-as.numeric(dataMurine$Antígeno)
+dataMurine$Region<-as.numeric(dataMurine$Region)
+dataMurine$Antigeno<-as.numeric(dataMurine$Antigeno)
 summary(dataMurine) 
 ```
 
@@ -120,7 +120,7 @@ cor(x=dataMurine[2:5],method="pearson"); pairs(dataMurine[2:5]) #Tenemos en cuen
 ```
 
 ```{r}
-murine_rl=lm(formula= Reestimulación~Grupo,data=dataMurine)
+murine_rl=lm(formula= Reestimulacion~Grupo,data=dataMurine)
 summary(murine_rl)
 ```
 #### Representación del conjunto de variables:
@@ -128,14 +128,14 @@ summary(murine_rl)
 opar <- par(no.readonly = TRUE)
 
 par(mar = c(5, 5, 4, 14))
-plot(dataMurine$Grupo,dataMurine$Reestimulación, xlab="Grupo", ylab="Reestimulación")
+plot(dataMurine$Grupo,dataMurine$Reestimulacion, xlab="Grupo", ylab="Reestimulación")
 abline(murine_rl)
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 on.exit(par(opar))
 ```
 
 ```{r}
-murine_rm<-lm(dataMurine$Reestimulación~dataMurine$Grupo + dataMurine$Región+dataMurine$Antígeno,data=dataMurine[2:5])
+murine_rm<-lm(dataMurine$Reestimulacion~dataMurine$Grupo + dataMurine$Region+dataMurine$Antigeno,data=dataMurine[2:5])
 summary(murine_rm)
 ```
 
@@ -145,14 +145,14 @@ step(object=murine_rm,direction ="both", trace=1) # Análisis de los mejores pre
 
 ```{r}
 #Se obtiene el modelo de regresión con los mejores predictores
-murine_rm<-lm(formula = dataMurine$Reestimulación~dataMurine$Región + dataMurine$Antígeno, data = dataMurine[2:5])
+murine_rm<-lm(formula = dataMurine$Reestimulacion~dataMurine$Region + dataMurine$Antigeno, data = dataMurine[2:5])
 summary(murine_rm)
 ```
 
 ```{r}
 #definimos los vectores de las variables lage y lbase y los guardamos en un dataframe
-antigeno_murine<-c(dataMurine$Antígeno)
-raton_murine<-c(+dataMurine$Ratón)
+antigeno_murine<-c(dataMurine$Antigeno)
+raton_murine<-c(+dataMurine$Raton)
 df_murine<-data.frame(antigeno_murine,raton_murine)
 #Primeros registros:
 head(df_murine)
@@ -226,7 +226,7 @@ rect.hclust(hc_div_murine,k=10,border=2:10) # por último se asocian los agrupam
 
 ```{r}
 grupos<-c(dataMurine$Grupo)
-reestimulacion<-c(dataMurine$Reestimulación)
+reestimulacion<-c(dataMurine$Reestimulacion)
 df_murine_anova<-data.frame(grupos,reestimulacion) #definimos el conjunto de datos
 head(df_murine_anova,4) #mostramos la información del data frame
 
@@ -248,7 +248,7 @@ aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
 opar <- par(no.readonly = TRUE)
 
 par(mar = c(5, 5, 4, 14))
-boxplot(dataMurine$Reestimulación~dataMurine$Grupo, data=dataMurine, id.method="y")
+boxplot(dataMurine$Reestimulacion~dataMurine$Grupo, data=dataMurine, id.method="y")
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 
 on.exit(par(opar))
