@@ -83,7 +83,7 @@ plot(dataMurine$Grupo, col = "dark red", xlab= "Grupos") # el numero de individu
 plot(dataMurine$Región,col= "yellow", xlab= "Región") #el numero de individuos por región
 
 
-plot(dataMurine$Grupo,dataMurine$Reestimulación,type='o', col = "green", xlab= "grupo", ylab= "reestimulación") #la reestimulación por cada grupo del estudio
+plot(dataMurine$Grupo,dataMurine$Reestimulación,type='o', col = "green", xlab= "Grupos", ylab= "Reestimulación") #la reestimulación por cada grupo del estudio
 ```
 
 
@@ -101,10 +101,117 @@ aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulaci
 ## Apartado 5
 #### Complementando el apartado anterior, elaborar un análisis de regresión de dos conjuntos de variables (LAB2 y Ejercicio 6 de la PEC1). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada.
 ```{r}
+str(dataMurine)
+```
+
+```{r}
+summary(dataMurine)
+```
+
+```{r}
+dataMurine$Grupo<-as.numeric(dataMurine$Grupo)
+dataMurine$Región<-as.numeric(dataMurine$Región)
+dataMurine$Antígeno<-as.numeric(dataMurine$Antígeno)
+summary(dataMurine) 
+```
+
+```{r}
+cor(x=dataMurine[2:5],method="pearson"); pairs(dataMurine[2:5]) #Tenemos en cuenta solo las variables no los IDs de los ratones ya que no aportan nada ahora mismo
+```
+
+```{r}
+murine_rl=lm(formula= Reestimulación~Grupo,data=dataMurine)
+summary(murine_rl)
+```
+#### Representación del conjunto de variables:
+```{r ,echo= FALSE}
+opar <- par(no.readonly = TRUE)
+
+par(mar = c(5, 5, 4, 14))
+plot(dataMurine$Grupo,dataMurine$Reestimulación, xlab="Grupo", ylab="Reestimulación")
+abline(murine_rl)
+legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
+on.exit(par(opar))
+```
+
+```{r}
+murine_rm<-lm(dataMurine$Reestimulación~dataMurine$Grupo + dataMurine$Región+dataMurine$Antígeno,data=dataMurine[2:5])
+summary(murine_rm)
+```
+
+```{r}
+step(object=murine_rm,direction ="both", trace=1) # Análisis de los mejores predictores 
+```
+
+```{r}
+#Se obtiene el modelo de regresión con los mejores predictores
+murine_rm<-lm(formula = dataMurine$Reestimulación~dataMurine$Región + dataMurine$Antígeno, data = dataMurine[2:5])
+summary(murine_rm)
+```
+
+```{r}
+#definimos los vectores de las variables lage y lbase y los guardamos en un dataframe
+antigeno_murine<-c(dataMurine$Antígeno)
+raton_murine<-c(+dataMurine$Ratón)
+df_murine<-data.frame(antigeno_murine,raton_murine)
+#Primeros registros:
+head(df_murine)
+```
+
+```{r}
+table(df_murine$antigeno_murine) # diferencias en número de observaciones
+```
+
+```{r}
+aggregate(raton_murine~antigeno_murine,data=df_murine,FUN=mean) # calculo de media de edad en función de trt
+```
+
+```{r}
+boxplot(raton_murine~antigeno_murine,data=df_murine,id.method="y")
+```
+
+```{r}
+require(nortest)
+by(data=df_murine,INDICES = df_murine$antigeno_murine,FUN=function(x){lillie.test(x$raton_murine )})
+```
+
+```{r}
+library(cluster)
+d_agl_murine<-dist(dataMurine,method="euclidean")
+hc_agl_murine<-hclust(d_agl_murine,method="complete") 
+plot(hc_agl_murine,cex=0.6,hang=-1, main ="Dendograma de cluster") 
+```
+
+```{r}
+##Agrupamiento divisional jerárquico.
+hc_agl_murine<-agnes(dataMurine,method="complete") 
+pltree(hc_agl_murine,cex=0.6,hang=-1,main="Dendograma de agnes") 
 
 ```
 
+#### Coeficiente de aglomeración
+```{r, echo=FALSE}
+hc_agl_murine$ac 
+```
 
+##### Coeficiente próximo a 1
+
+#### Agrupamiento divisional jerárquico
+```{r}
+
+hc_div_murine<-diana(dataMurine) ##calculamos los clústeres jerárquicos
+pltree(hc_div_murine,cex=0.6,hang=-1,main="Dendograma de Diana") 
+```
+
+### Coeficiente de división:
+```{r}
+hc_div_murine$dc # coeficiente también próximo a 1
+```
+
+```{r}
+pltree(hc_div_murine,hang=-1,cex=0.6)
+rect.hclust(hc_div_murine,k=10,border=2:10) # por último se asocian los agrupamiento de datos
+```
 
 ## Apartado 6 
 ```{r}
@@ -114,11 +221,45 @@ aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulaci
 
 
 ## Apartado 7
-#### Complementando el apartado anterior, elaborar un análisis de regresión de dos conjuntos de variables (LAB2 y Ejercicio 6 de la PEC1). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada.
+#### Complementando el apartado anterior, elaborar un análisis ANOVA de dos conjuntos de variables (LAB5 y Ejercicio 6 de la PEC2). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada. Además, realizar una prueba cluster de las variables, y si existe un fuerte agrupamiento, elaborar un dendograma (LAB5).
+
+
+```{r}
+grupos<-c(dataMurine$Grupo)
+reestimulacion<-c(dataMurine$Reestimulación)
+df_murine_anova<-data.frame(grupos,reestimulacion) #definimos el conjunto de datos
+head(df_murine_anova,4) #mostramos la información del data frame
+
+```
+
+```{r}
+table(df_murine_anova$grupo) #número de observaciones por cada grupo
+```
+
+```{r}
+
+##Media de pesos por raza
+aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=mean)
+##Desviación típica de pesos por raza
+aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
+
+boxplot(dataMurine$Reestimulación~dataMurine$Grupo, data=dataMurine, id.method="y")
+
+
+```
 
 ```{r}
 
 ```
+
+```{r}
+
+```
+
+```{r}
+
+```
+
 
 
 
