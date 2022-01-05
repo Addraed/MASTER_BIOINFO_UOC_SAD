@@ -194,5 +194,5 @@ probData$Diferencia <- difference  # Añadir las diferencias entre Reestimulacio
 
 colnames(probData) <- c("Grupo","Region","Antigeno","Probabilidad_Con_Tumor","Probabilidad_Sin_Tumor","Diferencia") # Cambiar nombre de las columnas del Base Frame
 
-cat("Las diferencias entre la reestimulación de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor")
+cat("Las diferencias entre reestimulaciones de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor")
 probData
