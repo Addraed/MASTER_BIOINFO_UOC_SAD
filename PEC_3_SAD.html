@@ -620,231 +620,15 @@ for (i in regionVector){
       
       normFrame &lt;- subset(dataMurine,(dataMurine$Grupo == Num1[1] &amp; dataMurine$Region == Num1[2] &amp; dataMurine$Antigeno == Num1[3]))
       prob &lt;- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
-      print(prob)
+      #print(prob)
       Num1 &lt;- c(j,i,k,prob)
-      print(Num1)
+      #print(Num1)
       probData &lt;- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
       
     }
   }
-}</code></pre>
-<pre><code>## [1] 0.6679035
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;1&quot;                 &quot;0.667903478558278&quot;
-## [1] 0.5434095
-## [1] &quot;A&quot;                &quot;Peritoneo&quot;        &quot;2&quot;                &quot;0.54340951958385&quot;
-## [1] 0.6199513
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.619951275436267&quot;
-## [1] 0.3281637
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.328163691182681&quot;
-## [1] 0.3195405
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.319540538985855&quot;
-## [1] 0.3884896
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.388489558305071&quot;
-## [1] 0.4609075
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.460907507859259&quot;
-## [1] 0.808467
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.808467030787922&quot;
-## [1] 0.5361718
-## [1] &quot;A&quot;                 &quot;Peritoneo&quot;         &quot;9&quot;                 &quot;0.536171803448356&quot;
-## [1] 0.2951922
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;1&quot;                 &quot;0.295192179031249&quot;
-## [1] 0.2583237
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;2&quot;                 &quot;0.258323721962023&quot;
-## [1] 0.7994837
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.799483667972237&quot;
-## [1] 0.5872246
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.587224564888786&quot;
-## [1] 0.3467106
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.346710579347437&quot;
-## [1] 0.5414011
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.541401060069557&quot;
-## [1] 0.6867607
-## [1] &quot;B&quot;                &quot;Peritoneo&quot;        &quot;7&quot;                &quot;0.68676071422406&quot;
-## [1] 0.5994918
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.599491790694823&quot;
-## [1] 0.22629
-## [1] &quot;B&quot;                 &quot;Peritoneo&quot;         &quot;9&quot;                 &quot;0.226289979787107&quot;
-## [1] 0.02717238
-## [1] &quot;C&quot;                  &quot;Peritoneo&quot;          &quot;1&quot;                  &quot;0.0271723771342498&quot;
-## [1] 0.1760452
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;2&quot;                 &quot;0.176045193278711&quot;
-## [1] 0.745995
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.745994960381615&quot;
-## [1] 0.3683718
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.368371758382113&quot;
-## [1] 0.2464678
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.246467845265016&quot;
-## [1] 0.5735399
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.573539862162668&quot;
-## [1] 0.4187093
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.418709283160394&quot;
-## [1] 0.6903501
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.690350080689636&quot;
-## [1] 0.4382389
-## [1] &quot;C&quot;                 &quot;Peritoneo&quot;         &quot;9&quot;                 &quot;0.438238867979411&quot;
-## [1] 0.5407152
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;1&quot;                 &quot;0.540715182679812&quot;
-## [1] 0.3853506
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;2&quot;                 &quot;0.385350598268059&quot;
-## [1] 0.505622
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.505621952560551&quot;
-## [1] 0.4481369
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.448136859097803&quot;
-## [1] 0.5843796
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.584379559214072&quot;
-## [1] 0.6546393
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.654639264802045&quot;
-## [1] 0.7458375
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.745837538119801&quot;
-## [1] 0.886358
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.886358010258717&quot;
-## [1] 0.6063119
-## [1] &quot;D&quot;                 &quot;Peritoneo&quot;         &quot;9&quot;                 &quot;0.606311863697502&quot;
-## [1] 0.5183811
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;1&quot;                 &quot;0.518381081007051&quot;
-## [1] 0.2408861
-## [1] &quot;I&quot;                &quot;Peritoneo&quot;        &quot;2&quot;                &quot;0.24088605995372&quot;
-## [1] 0.4231496
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.423149601580748&quot;
-## [1] 0.3255383
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.325538263538577&quot;
-## [1] 0.4349108
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.434910847950992&quot;
-## [1] 0.4289033
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.428903270886361&quot;
-## [1] 0.621132
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.621132029835285&quot;
-## [1] 0.6689373
-## [1] &quot;I&quot;                 &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.668937323395529&quot;
-## [1] 0.3311045
-## [1] &quot;I&quot;                &quot;Peritoneo&quot;        &quot;9&quot;                &quot;0.33110445962751&quot;
-## [1] 0.4538786
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;1&quot;                 &quot;0.453878634029598&quot;
-## [1] 0.3495704
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;2&quot;                 &quot;0.349570389520894&quot;
-## [1] 0.7763496
-## [1] &quot;J&quot;                &quot;Peritoneo&quot;        &quot;3&quot;                &quot;0.77634956855861&quot;
-## [1] 0.6079374
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.607937447160999&quot;
-## [1] 0.6752366
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.675236647782687&quot;
-## [1] 0.7300847
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.730084674220956&quot;
-## [1] 0.6212381
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.621238118029068&quot;
-## [1] 0.5973883
-## [1] &quot;J&quot;                 &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.597388317458777&quot;
-## [1] 0.0759617
-## [1] &quot;J&quot;                  &quot;Peritoneo&quot;          &quot;9&quot;                  &quot;0.0759616955905126&quot;
-## [1] 0.9051193
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.905119258513486&quot;
-## [1] 0.7877506
-## [1] &quot;A&quot;                &quot;Bazo&quot;             &quot;2&quot;                &quot;0.78775061822161&quot;
-## [1] 0.7737353
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.773735298705709&quot;
-## [1] 0.6966541
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.696654081927422&quot;
-## [1] 0.8640652
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.864065209355137&quot;
-## [1] 0.6465867
-## [1] &quot;A&quot;                &quot;Bazo&quot;             &quot;6&quot;                &quot;0.64658674330423&quot;
-## [1] 0.7836584
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.783658375946516&quot;
-## [1] 0.8834802
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.883480159586853&quot;
-## [1] 0.8884223
-## [1] &quot;A&quot;                 &quot;Bazo&quot;              &quot;9&quot;                 &quot;0.888422333480752&quot;
-## [1] 0.6955002
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.695500178127807&quot;
-## [1] 0.6688066
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.668806641480184&quot;
-## [1] 0.8991402
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.899140168659657&quot;
-## [1] 0.5656071
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.565607118558602&quot;
-## [1] 0.6414821
-## [1] &quot;B&quot;                &quot;Bazo&quot;             &quot;5&quot;                &quot;0.64148209433348&quot;
-## [1] 0.7975986
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.797598646682966&quot;
-## [1] 0.7711792
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.771179171559412&quot;
-## [1] 0.8316985
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.831698513817834&quot;
-## [1] 0.8070493
-## [1] &quot;B&quot;                 &quot;Bazo&quot;              &quot;9&quot;                 &quot;0.807049301449674&quot;
-## [1] 0.8243997
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.824399698427521&quot;
-## [1] 0.937795
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.937794998490891&quot;
-## [1] 0.8537537
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.853753710673744&quot;
-## [1] 0.7593359
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.759335888745445&quot;
-## [1] 0.8236632
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.823663203844745&quot;
-## [1] 0.7423992
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.742399190188061&quot;
-## [1] 0.8458375
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.845837471360601&quot;
-## [1] 0.9881981
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.988198071901062&quot;
-## [1] 0.8495573
-## [1] &quot;C&quot;                 &quot;Bazo&quot;              &quot;9&quot;                 &quot;0.849557272445861&quot;
-## [1] 0.6298652
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.629865164264799&quot;
-## [1] 0.9087121
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.908712099970133&quot;
-## [1] 0.8970077
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.897007696161253&quot;
-## [1] 0.737889
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.737889036216219&quot;
-## [1] 0.9293628
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.929362834856233&quot;
-## [1] 0.8167635
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.816763527717961&quot;
-## [1] 0.6316768
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.631676843454908&quot;
-## [1] 0.826811
-## [1] &quot;D&quot;                 &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.826811000085341&quot;
-## [1] 0.8076629
-## [1] &quot;D&quot;                &quot;Bazo&quot;             &quot;9&quot;                &quot;0.80766285493503&quot;
-## [1] 0.7950458
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.795045760218678&quot;
-## [1] 0.8934299
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.893429917540146&quot;
-## [1] 0.9383178
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.938317821860415&quot;
-## [1] 0.7551186
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.755118617329379&quot;
-## [1] 0.7850644
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.785064398263701&quot;
-## [1] 0.6592604
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.659260399430587&quot;
-## [1] 0.7737691
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.773769088503085&quot;
-## [1] 0.9080293
-## [1] &quot;I&quot;                 &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.908029336600213&quot;
-## [1] 0.8668527
-## [1] &quot;I&quot;                &quot;Bazo&quot;             &quot;9&quot;                &quot;0.86685271460633&quot;
-## [1] 0.6138678
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.613867811572788&quot;
-## [1] 0.804351
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.804350959942284&quot;
-## [1] 0.8134504
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.813450399362556&quot;
-## [1] 0.7146842
-## [1] &quot;J&quot;              &quot;Bazo&quot;           &quot;4&quot;              &quot;0.714684174141&quot;
-## [1] 0.7400038
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.740003841028254&quot;
-## [1] 0.6282478
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.628247815873853&quot;
-## [1] 0.3756153
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.375615306179223&quot;
-## [1] 0.8485258
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.848525836139211&quot;
-## [1] 0.687857
-## [1] &quot;J&quot;                 &quot;Bazo&quot;              &quot;9&quot;                 &quot;0.687857013034674&quot;</code></pre>
-<pre class="r"><code>colnames(probData) &lt;-c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Probabilidad&quot;) # Cambiar nombre de las columnas del Base Frame</code></pre>
+}
+colnames(probData) &lt;-c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Probabilidad&quot;) # Cambiar nombre de las columnas del Base Frame</code></pre>
 </div>
 <div id="a-que-antigeno-responde-mas-cada-grupo" class="section level4">
 <h4>- ¿A que antigeno responde mas cada grupo?</h4>
@@ -857,147 +641,15 @@ regionVector &lt;- c(&quot;Peritoneo&quot;,&quot;Bazo&quot;) # Regiones posibles
 for (i in regionVector){
   for (j in groupVector){
       Num1 &lt;- c(j,i)
-      print(Num1)
+      #print(Num1)
       probabilidadMax &lt;-  subset(probData, (probData$Grupo == j &amp; probData$Region == i))
       colnames(probabilidadMax) &lt;- c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Probabilidad_Max&quot;) # Cambiar nombre de las columnas del Base Frame
-      print(probabilidadMax)
+      #print(probabilidadMax)
       probMax &lt;-  rbind(probMax,subset(probabilidadMax, probabilidadMax$Probabilidad == max(probabilidadMax$Probabilidad)))
     
   }
-}</code></pre>
-<pre><code>## [1] &quot;A&quot;         &quot;Peritoneo&quot;
-##   Grupo    Region Antigeno  Probabilidad_Max
-## 1     A Peritoneo        1 0.667903478558278
-## 2     A Peritoneo        2  0.54340951958385
-## 3     A Peritoneo        3 0.619951275436267
-## 4     A Peritoneo        4 0.328163691182681
-## 5     A Peritoneo        5 0.319540538985855
-## 6     A Peritoneo        6 0.388489558305071
-## 7     A Peritoneo        7 0.460907507859259
-## 8     A Peritoneo        8 0.808467030787922
-## 9     A Peritoneo        9 0.536171803448356
-## [1] &quot;B&quot;         &quot;Peritoneo&quot;
-##    Grupo    Region Antigeno  Probabilidad_Max
-## 10     B Peritoneo        1 0.295192179031249
-## 11     B Peritoneo        2 0.258323721962023
-## 12     B Peritoneo        3 0.799483667972237
-## 13     B Peritoneo        4 0.587224564888786
-## 14     B Peritoneo        5 0.346710579347437
-## 15     B Peritoneo        6 0.541401060069557
-## 16     B Peritoneo        7  0.68676071422406
-## 17     B Peritoneo        8 0.599491790694823
-## 18     B Peritoneo        9 0.226289979787107
-## [1] &quot;C&quot;         &quot;Peritoneo&quot;
-##    Grupo    Region Antigeno   Probabilidad_Max
-## 19     C Peritoneo        1 0.0271723771342498
-## 20     C Peritoneo        2  0.176045193278711
-## 21     C Peritoneo        3  0.745994960381615
-## 22     C Peritoneo        4  0.368371758382113
-## 23     C Peritoneo        5  0.246467845265016
-## 24     C Peritoneo        6  0.573539862162668
-## 25     C Peritoneo        7  0.418709283160394
-## 26     C Peritoneo        8  0.690350080689636
-## 27     C Peritoneo        9  0.438238867979411
-## [1] &quot;D&quot;         &quot;Peritoneo&quot;
-##    Grupo    Region Antigeno  Probabilidad_Max
-## 28     D Peritoneo        1 0.540715182679812
-## 29     D Peritoneo        2 0.385350598268059
-## 30     D Peritoneo        3 0.505621952560551
-## 31     D Peritoneo        4 0.448136859097803
-## 32     D Peritoneo        5 0.584379559214072
-## 33     D Peritoneo        6 0.654639264802045
-## 34     D Peritoneo        7 0.745837538119801
-## 35     D Peritoneo        8 0.886358010258717
-## 36     D Peritoneo        9 0.606311863697502
-## [1] &quot;I&quot;         &quot;Peritoneo&quot;
-##    Grupo    Region Antigeno  Probabilidad_Max
-## 37     I Peritoneo        1 0.518381081007051
-## 38     I Peritoneo        2  0.24088605995372
-## 39     I Peritoneo        3 0.423149601580748
-## 40     I Peritoneo        4 0.325538263538577
-## 41     I Peritoneo        5 0.434910847950992
-## 42     I Peritoneo        6 0.428903270886361
-## 43     I Peritoneo        7 0.621132029835285
-## 44     I Peritoneo        8 0.668937323395529
-## 45     I Peritoneo        9  0.33110445962751
-## [1] &quot;J&quot;         &quot;Peritoneo&quot;
-##    Grupo    Region Antigeno   Probabilidad_Max
-## 46     J Peritoneo        1  0.453878634029598
-## 47     J Peritoneo        2  0.349570389520894
-## 48     J Peritoneo        3   0.77634956855861
-## 49     J Peritoneo        4  0.607937447160999
-## 50     J Peritoneo        5  0.675236647782687
-## 51     J Peritoneo        6  0.730084674220956
-## 52     J Peritoneo        7  0.621238118029068
-## 53     J Peritoneo        8  0.597388317458777
-## 54     J Peritoneo        9 0.0759616955905126
-## [1] &quot;A&quot;    &quot;Bazo&quot;
-##    Grupo Region Antigeno  Probabilidad_Max
-## 55     A   Bazo        1 0.905119258513486
-## 56     A   Bazo        2  0.78775061822161
-## 57     A   Bazo        3 0.773735298705709
-## 58     A   Bazo        4 0.696654081927422
-## 59     A   Bazo        5 0.864065209355137
-## 60     A   Bazo        6  0.64658674330423
-## 61     A   Bazo        7 0.783658375946516
-## 62     A   Bazo        8 0.883480159586853
-## 63     A   Bazo        9 0.888422333480752
-## [1] &quot;B&quot;    &quot;Bazo&quot;
-##    Grupo Region Antigeno  Probabilidad_Max
-## 64     B   Bazo        1 0.695500178127807
-## 65     B   Bazo        2 0.668806641480184
-## 66     B   Bazo        3 0.899140168659657
-## 67     B   Bazo        4 0.565607118558602
-## 68     B   Bazo        5  0.64148209433348
-## 69     B   Bazo        6 0.797598646682966
-## 70     B   Bazo        7 0.771179171559412
-## 71     B   Bazo        8 0.831698513817834
-## 72     B   Bazo        9 0.807049301449674
-## [1] &quot;C&quot;    &quot;Bazo&quot;
-##    Grupo Region Antigeno  Probabilidad_Max
-## 73     C   Bazo        1 0.824399698427521
-## 74     C   Bazo        2 0.937794998490891
-## 75     C   Bazo        3 0.853753710673744
-## 76     C   Bazo        4 0.759335888745445
-## 77     C   Bazo        5 0.823663203844745
-## 78     C   Bazo        6 0.742399190188061
-## 79     C   Bazo        7 0.845837471360601
-## 80     C   Bazo        8 0.988198071901062
-## 81     C   Bazo        9 0.849557272445861
-## [1] &quot;D&quot;    &quot;Bazo&quot;
-##    Grupo Region Antigeno  Probabilidad_Max
-## 82     D   Bazo        1 0.629865164264799
-## 83     D   Bazo        2 0.908712099970133
-## 84     D   Bazo        3 0.897007696161253
-## 85     D   Bazo        4 0.737889036216219
-## 86     D   Bazo        5 0.929362834856233
-## 87     D   Bazo        6 0.816763527717961
-## 88     D   Bazo        7 0.631676843454908
-## 89     D   Bazo        8 0.826811000085341
-## 90     D   Bazo        9  0.80766285493503
-## [1] &quot;I&quot;    &quot;Bazo&quot;
-##    Grupo Region Antigeno  Probabilidad_Max
-## 91     I   Bazo        1 0.795045760218678
-## 92     I   Bazo        2 0.893429917540146
-## 93     I   Bazo        3 0.938317821860415
-## 94     I   Bazo        4 0.755118617329379
-## 95     I   Bazo        5 0.785064398263701
-## 96     I   Bazo        6 0.659260399430587
-## 97     I   Bazo        7 0.773769088503085
-## 98     I   Bazo        8 0.908029336600213
-## 99     I   Bazo        9  0.86685271460633
-## [1] &quot;J&quot;    &quot;Bazo&quot;
-##     Grupo Region Antigeno  Probabilidad_Max
-## 100     J   Bazo        1 0.613867811572788
-## 101     J   Bazo        2 0.804350959942284
-## 102     J   Bazo        3 0.813450399362556
-## 103     J   Bazo        4    0.714684174141
-## 104     J   Bazo        5 0.740003841028254
-## 105     J   Bazo        6 0.628247815873853
-## 106     J   Bazo        7 0.375615306179223
-## 107     J   Bazo        8 0.848525836139211
-## 108     J   Bazo        9 0.687857013034674</code></pre>
-<pre class="r"><code>colnames(probMax) &lt;- c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Probabilidad_Max&quot;) # Cambiar nombre de las columnas del Base Frame
+}
+colnames(probMax) &lt;- c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Probabilidad_Max&quot;) # Cambiar nombre de las columnas del Base Frame
 
 cat(&quot;La siguiente tabla muestra que antigeno tiene mas reestimulacion para cada grupo y region:&quot;)</code></pre>
 <pre><code>## La siguiente tabla muestra que antigeno tiene mas reestimulacion para cada grupo y region:</code></pre>
@@ -1047,112 +699,77 @@ for (i in regionVector){
     for (k in 1:9){
      
       normFrame &lt;- subset(dataMurine,(dataMurine$Grupo == &quot;A&quot; &amp; dataMurine$Region == Num1[2] &amp; dataMurine$Antigeno == Num1[3]))
-      prob1 &lt;- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob1 &lt;- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       normFrame &lt;- subset(dataMurine,(dataMurine$Grupo == &quot;B&quot; &amp; dataMurine$Region == Num1[2] &amp; dataMurine$Antigeno == Num1[3]))
-      prob2 &lt;- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob2 &lt;- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       
       
       Num1 &lt;- c(&quot;Tratamiento_1&quot;,i,k,prob1,prob2)
-      print(Num1)
+      #print(Num1)
       probData &lt;- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
   }
-}</code></pre>
-<pre><code>## [1] &quot;Tratamiento_1&quot; &quot;Peritoneo&quot;     &quot;1&quot;             NA              NA             
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;2&quot;                 &quot;0.667903478558278&quot; &quot;0.295192179031249&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.54340951958385&quot;  &quot;0.258323721962023&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.619951275436267&quot; &quot;0.799483667972237&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.328163691182681&quot; &quot;0.587224564888786&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.319540538985855&quot; &quot;0.346710579347437&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.388489558305071&quot; &quot;0.541401060069557&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.460907507859259&quot; &quot;0.68676071422406&quot; 
-## [1] &quot;Tratamiento_1&quot;     &quot;Peritoneo&quot;         &quot;9&quot;                 &quot;0.808467030787922&quot; &quot;0.599491790694823&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.536171803448356&quot; &quot;0.226289979787107&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.905119258513486&quot; &quot;0.695500178127807&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.78775061822161&quot;  &quot;0.668806641480184&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.773735298705709&quot; &quot;0.899140168659657&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.696654081927422&quot; &quot;0.565607118558602&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.864065209355137&quot; &quot;0.64148209433348&quot; 
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.64658674330423&quot;  &quot;0.797598646682966&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.783658375946516&quot; &quot;0.771179171559412&quot;
-## [1] &quot;Tratamiento_1&quot;     &quot;Bazo&quot;              &quot;9&quot;                 &quot;0.883480159586853&quot; &quot;0.831698513817834&quot;</code></pre>
-<pre class="r"><code>for (i in regionVector){
+}
+
+for (i in regionVector){
     for (k in 1:9){
       normFrame &lt;- subset(dataMurine,(dataMurine$Grupo == &quot;C&quot; &amp; dataMurine$Region == Num1[2] &amp; dataMurine$Antigeno == Num1[3]))
-      prob3 &lt;- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob3 &lt;- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       normFrame &lt;- subset(dataMurine,(dataMurine$Grupo == &quot;D&quot; &amp; dataMurine$Region == Num1[2] &amp; dataMurine$Antigeno == Num1[3]))
-      prob4 &lt;- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob4 &lt;- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       Num1 &lt;- c(&quot;Tratamiento_2&quot;,i,k,prob3,prob4)
-      print(Num1)
+      #print(Num1)
       probData &lt;- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
       
   }
-}</code></pre>
-<pre><code>## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;1&quot;                 &quot;0.849557272445861&quot; &quot;0.80766285493503&quot; 
-## [1] &quot;Tratamiento_2&quot;      &quot;Peritoneo&quot;          &quot;2&quot;                  &quot;0.0271723771342498&quot; &quot;0.540715182679812&quot; 
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;3&quot;                 &quot;0.176045193278711&quot; &quot;0.385350598268059&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;4&quot;                 &quot;0.745994960381615&quot; &quot;0.505621952560551&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;5&quot;                 &quot;0.368371758382113&quot; &quot;0.448136859097803&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;6&quot;                 &quot;0.246467845265016&quot; &quot;0.584379559214072&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;7&quot;                 &quot;0.573539862162668&quot; &quot;0.654639264802045&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;8&quot;                 &quot;0.418709283160394&quot; &quot;0.745837538119801&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Peritoneo&quot;         &quot;9&quot;                 &quot;0.690350080689636&quot; &quot;0.886358010258717&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;1&quot;                 &quot;0.438238867979411&quot; &quot;0.606311863697502&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;2&quot;                 &quot;0.824399698427521&quot; &quot;0.629865164264799&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;3&quot;                 &quot;0.937794998490891&quot; &quot;0.908712099970133&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;4&quot;                 &quot;0.853753710673744&quot; &quot;0.897007696161253&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;5&quot;                 &quot;0.759335888745445&quot; &quot;0.737889036216219&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;6&quot;                 &quot;0.823663203844745&quot; &quot;0.929362834856233&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;7&quot;                 &quot;0.742399190188061&quot; &quot;0.816763527717961&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;8&quot;                 &quot;0.845837471360601&quot; &quot;0.631676843454908&quot;
-## [1] &quot;Tratamiento_2&quot;     &quot;Bazo&quot;              &quot;9&quot;                 &quot;0.988198071901062&quot; &quot;0.826811000085341&quot;</code></pre>
-<pre class="r"><code>difference &lt;- c()
+}
+difference &lt;- c()
 for (i in 1:nrow(probData)){
   difference[i] &lt;- as.numeric(probData[i,4])-as.numeric(probData[i,5]) # Calcular la diferencia de cada Antigeno/Region
 }
 probData$Diferencia &lt;- difference  # Añadir las diferencias entre Reestimulacion del grupo con tumor y sin tumor al Frame
 
-colnames(probData) &lt;- c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Probabilidad_Con_Tumor&quot;,&quot;Probabilidad_Sin_Tumor&quot;,&quot;Diferencia&quot;) # Cambiar nombre de las columnas del Base Frame
+colnames(probData) &lt;- c(&quot;Grupo&quot;,&quot;Region&quot;,&quot;Antigeno&quot;,&quot;Prob_Con_Tumor&quot;,&quot;Prob_Sin_Tumor&quot;,&quot;Diferencia&quot;) # Cambiar nombre de las columnas del Base Frame
 
 cat(&quot;Las diferencias entre reestimulaciones de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor&quot;)</code></pre>
 <pre><code>## Las diferencias entre reestimulaciones de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor</code></pre>
 <pre class="r"><code>probData</code></pre>
-<pre><code>##            Grupo    Region Antigeno Probabilidad_Con_Tumor Probabilidad_Sin_Tumor  Diferencia
-## 1  Tratamiento_1 Peritoneo        1                   &lt;NA&gt;                   &lt;NA&gt;          NA
-## 2  Tratamiento_1 Peritoneo        2      0.667903478558278      0.295192179031249  0.37271130
-## 3  Tratamiento_1 Peritoneo        3       0.54340951958385      0.258323721962023  0.28508580
-## 4  Tratamiento_1 Peritoneo        4      0.619951275436267      0.799483667972237 -0.17953239
-## 5  Tratamiento_1 Peritoneo        5      0.328163691182681      0.587224564888786 -0.25906087
-## 6  Tratamiento_1 Peritoneo        6      0.319540538985855      0.346710579347437 -0.02717004
-## 7  Tratamiento_1 Peritoneo        7      0.388489558305071      0.541401060069557 -0.15291150
-## 8  Tratamiento_1 Peritoneo        8      0.460907507859259       0.68676071422406 -0.22585321
-## 9  Tratamiento_1 Peritoneo        9      0.808467030787922      0.599491790694823  0.20897524
-## 10 Tratamiento_1      Bazo        1      0.536171803448356      0.226289979787107  0.30988182
-## 11 Tratamiento_1      Bazo        2      0.905119258513486      0.695500178127807  0.20961908
-## 12 Tratamiento_1      Bazo        3       0.78775061822161      0.668806641480184  0.11894398
-## 13 Tratamiento_1      Bazo        4      0.773735298705709      0.899140168659657 -0.12540487
-## 14 Tratamiento_1      Bazo        5      0.696654081927422      0.565607118558602  0.13104696
-## 15 Tratamiento_1      Bazo        6      0.864065209355137       0.64148209433348  0.22258312
-## 16 Tratamiento_1      Bazo        7       0.64658674330423      0.797598646682966 -0.15101190
-## 17 Tratamiento_1      Bazo        8      0.783658375946516      0.771179171559412  0.01247920
-## 18 Tratamiento_1      Bazo        9      0.883480159586853      0.831698513817834  0.05178165
-## 19 Tratamiento_2 Peritoneo        1      0.849557272445861       0.80766285493503  0.04189442
-## 20 Tratamiento_2 Peritoneo        2     0.0271723771342498      0.540715182679812 -0.51354281
-## 21 Tratamiento_2 Peritoneo        3      0.176045193278711      0.385350598268059 -0.20930540
-## 22 Tratamiento_2 Peritoneo        4      0.745994960381615      0.505621952560551  0.24037301
-## 23 Tratamiento_2 Peritoneo        5      0.368371758382113      0.448136859097803 -0.07976510
-## 24 Tratamiento_2 Peritoneo        6      0.246467845265016      0.584379559214072 -0.33791171
-## 25 Tratamiento_2 Peritoneo        7      0.573539862162668      0.654639264802045 -0.08109940
-## 26 Tratamiento_2 Peritoneo        8      0.418709283160394      0.745837538119801 -0.32712825
-## 27 Tratamiento_2 Peritoneo        9      0.690350080689636      0.886358010258717 -0.19600793
-## 28 Tratamiento_2      Bazo        1      0.438238867979411      0.606311863697502 -0.16807300
-## 29 Tratamiento_2      Bazo        2      0.824399698427521      0.629865164264799  0.19453453
-## 30 Tratamiento_2      Bazo        3      0.937794998490891      0.908712099970133  0.02908290
-## 31 Tratamiento_2      Bazo        4      0.853753710673744      0.897007696161253 -0.04325399
-## 32 Tratamiento_2      Bazo        5      0.759335888745445      0.737889036216219  0.02144685
-## 33 Tratamiento_2      Bazo        6      0.823663203844745      0.929362834856233 -0.10569963
-## 34 Tratamiento_2      Bazo        7      0.742399190188061      0.816763527717961 -0.07436434
-## 35 Tratamiento_2      Bazo        8      0.845837471360601      0.631676843454908  0.21416063
-## 36 Tratamiento_2      Bazo        9      0.988198071901062      0.826811000085341  0.16138707</code></pre>
+<pre><code>##            Grupo    Region Antigeno Prob_Con_Tumor Prob_Sin_Tumor Diferencia
+## 1  Tratamiento_1 Peritoneo        1           &lt;NA&gt;           &lt;NA&gt;         NA
+## 2  Tratamiento_1 Peritoneo        2         0.6679         0.2952     0.3727
+## 3  Tratamiento_1 Peritoneo        3         0.5434         0.2583     0.2851
+## 4  Tratamiento_1 Peritoneo        4           0.62         0.7995    -0.1795
+## 5  Tratamiento_1 Peritoneo        5         0.3282         0.5872    -0.2590
+## 6  Tratamiento_1 Peritoneo        6         0.3195         0.3467    -0.0272
+## 7  Tratamiento_1 Peritoneo        7         0.3885         0.5414    -0.1529
+## 8  Tratamiento_1 Peritoneo        8         0.4609         0.6868    -0.2259
+## 9  Tratamiento_1 Peritoneo        9         0.8085         0.5995     0.2090
+## 10 Tratamiento_1      Bazo        1         0.5362         0.2263     0.3099
+## 11 Tratamiento_1      Bazo        2         0.9051         0.6955     0.2096
+## 12 Tratamiento_1      Bazo        3         0.7878         0.6688     0.1190
+## 13 Tratamiento_1      Bazo        4         0.7737         0.8991    -0.1254
+## 14 Tratamiento_1      Bazo        5         0.6967         0.5656     0.1311
+## 15 Tratamiento_1      Bazo        6         0.8641         0.6415     0.2226
+## 16 Tratamiento_1      Bazo        7         0.6466         0.7976    -0.1510
+## 17 Tratamiento_1      Bazo        8         0.7837         0.7712     0.0125
+## 18 Tratamiento_1      Bazo        9         0.8835         0.8317     0.0518
+## 19 Tratamiento_2 Peritoneo        1         0.8496         0.8077     0.0419
+## 20 Tratamiento_2 Peritoneo        2         0.0272         0.5407    -0.5135
+## 21 Tratamiento_2 Peritoneo        3          0.176         0.3854    -0.2094
+## 22 Tratamiento_2 Peritoneo        4          0.746         0.5056     0.2404
+## 23 Tratamiento_2 Peritoneo        5         0.3684         0.4481    -0.0797
+## 24 Tratamiento_2 Peritoneo        6         0.2465         0.5844    -0.3379
+## 25 Tratamiento_2 Peritoneo        7         0.5735         0.6546    -0.0811
+## 26 Tratamiento_2 Peritoneo        8         0.4187         0.7458    -0.3271
+## 27 Tratamiento_2 Peritoneo        9         0.6904         0.8864    -0.1960
+## 28 Tratamiento_2      Bazo        1         0.4382         0.6063    -0.1681
+## 29 Tratamiento_2      Bazo        2         0.8244         0.6299     0.1945
+## 30 Tratamiento_2      Bazo        3         0.9378         0.9087     0.0291
+## 31 Tratamiento_2      Bazo        4         0.8538          0.897    -0.0432
+## 32 Tratamiento_2      Bazo        5         0.7593         0.7379     0.0214
+## 33 Tratamiento_2      Bazo        6         0.8237         0.9294    -0.1057
+## 34 Tratamiento_2      Bazo        7         0.7424         0.8168    -0.0744
+## 35 Tratamiento_2      Bazo        8         0.8458         0.6317     0.2141
+## 36 Tratamiento_2      Bazo        9         0.9882         0.8268     0.1614</code></pre>
 </div>
 </div>
 <div id="apartado-7" class="section level2">
@@ -1353,6 +970,65 @@ rect.hclust(hc_div_murine,k=10,border=2:10)</code></pre>
 </div>
 <div id="apartado-8" class="section level2">
 <h2>Apartado 8</h2>
+<pre><code>## 1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.</code></pre>
+<pre><code>##        Ratón Peri_1 Peri_2 Peri_3 Peri_4 Peri_5 Peri_6 Peri_7 Peri_8 Peri_9 Bazo_1 Bazo_2 Bazo_3 Bazo_4 Bazo_5 Bazo_6 Bazo_7 Bazo_8 Bazo_9
+## Ratón   1.00  -0.28  -0.35  -0.13  -0.21  -0.24  -0.25  -0.24  -0.20  -0.40  -0.30  -0.34  -0.44  -0.51  -0.52  -0.21  -0.50   0.07  -0.22
+## Peri_1 -0.28   1.00   0.64   0.41   0.46   0.64   0.46   0.75   0.39   0.47   0.06   0.40   0.02   0.14   0.04   0.03   0.16  -0.05  -0.01
+## Peri_2 -0.35   0.64   1.00   0.37   0.15   0.17   0.20   0.39   0.48   0.54  -0.01   0.01  -0.01  -0.15  -0.09  -0.07  -0.04   0.00   0.00
+## Peri_3 -0.13   0.41   0.37   1.00   0.36   0.32   0.46   0.34  -0.02  -0.05   0.13   0.22  -0.12  -0.05   0.03  -0.16   0.21   0.05  -0.13
+## Peri_4 -0.21   0.46   0.15   0.36   1.00   0.82   0.80   0.70   0.31   0.21   0.00   0.37   0.25   0.17   0.03  -0.09   0.11  -0.02  -0.10
+## Peri_5 -0.24   0.64   0.17   0.32   0.82   1.00   0.84   0.75   0.22   0.30   0.05   0.45   0.22   0.27   0.12  -0.08   0.18   0.00  -0.19
+## Peri_6 -0.25   0.46   0.20   0.46   0.80   0.84   1.00   0.60   0.27   0.25   0.00   0.30   0.26   0.20   0.07  -0.12   0.10   0.06  -0.22
+## Peri_7 -0.24   0.75   0.39   0.34   0.70   0.75   0.60   1.00   0.31   0.30   0.20   0.46   0.10   0.33   0.20  -0.07   0.30  -0.16  -0.06
+## Peri_8 -0.20   0.39   0.48  -0.02   0.31   0.22   0.27   0.31   1.00   0.78   0.02   0.04   0.17   0.10   0.04   0.02  -0.16  -0.08   0.00
+## Peri_9 -0.40   0.47   0.54  -0.05   0.21   0.30   0.25   0.30   0.78   1.00   0.15   0.14   0.32   0.15   0.17   0.06   0.03  -0.05  -0.03
+## Bazo_1 -0.30   0.06  -0.01   0.13   0.00   0.05   0.00   0.20   0.02   0.15   1.00   0.40   0.14   0.68   0.74   0.36   0.75   0.31   0.44
+## Bazo_2 -0.34   0.40   0.01   0.22   0.37   0.45   0.30   0.46   0.04   0.14   0.40   1.00   0.30   0.48   0.43   0.39   0.53   0.18   0.40
+## Bazo_3 -0.44   0.02  -0.01  -0.12   0.25   0.22   0.26   0.10   0.17   0.32   0.14   0.30   1.00   0.27   0.27   0.39   0.11   0.01   0.14
+## Bazo_4 -0.51   0.14  -0.15  -0.05   0.17   0.27   0.20   0.33   0.10   0.15   0.68   0.48   0.27   1.00   0.85   0.31   0.73   0.05   0.30
+## Bazo_5 -0.52   0.04  -0.09   0.03   0.03   0.12   0.07   0.20   0.04   0.17   0.74   0.43   0.27   0.85   1.00   0.27   0.80  -0.01   0.36
+## Bazo_6 -0.21   0.03  -0.07  -0.16  -0.09  -0.08  -0.12  -0.07   0.02   0.06   0.36   0.39   0.39   0.31   0.27   1.00   0.27   0.41   0.70
+## Bazo_7 -0.50   0.16  -0.04   0.21   0.11   0.18   0.10   0.30  -0.16   0.03   0.75   0.53   0.11   0.73   0.80   0.27   1.00   0.10   0.34
+## Bazo_8  0.07  -0.05   0.00   0.05  -0.02   0.00   0.06  -0.16  -0.08  -0.05   0.31   0.18   0.01   0.05  -0.01   0.41   0.10   1.00   0.51
+## Bazo_9 -0.22  -0.01   0.00  -0.13  -0.10  -0.19  -0.22  -0.06   0.00  -0.03   0.44   0.40   0.14   0.30   0.36   0.70   0.34   0.51   1.00</code></pre>
+<pre><code>## 2 - No todos los antigenos tienen más respuesta en los grupo con tumor, se debe a que algunos de los antigenos solo tienen reestimulacion con el tratamiento A (1,2,3,8) y otros con el tratamiento B (4,5,6,7,9</code></pre>
+<pre><code>##            Grupo    Region Antigeno Prob_Con_Tumor Prob_Sin_Tumor Diferencia
+## 1  Tratamiento_1 Peritoneo        1           &lt;NA&gt;           &lt;NA&gt;         NA
+## 2  Tratamiento_1 Peritoneo        2         0.6679         0.2952     0.3727
+## 3  Tratamiento_1 Peritoneo        3         0.5434         0.2583     0.2851
+## 4  Tratamiento_1 Peritoneo        4           0.62         0.7995    -0.1795
+## 5  Tratamiento_1 Peritoneo        5         0.3282         0.5872    -0.2590
+## 6  Tratamiento_1 Peritoneo        6         0.3195         0.3467    -0.0272
+## 7  Tratamiento_1 Peritoneo        7         0.3885         0.5414    -0.1529
+## 8  Tratamiento_1 Peritoneo        8         0.4609         0.6868    -0.2259
+## 9  Tratamiento_1 Peritoneo        9         0.8085         0.5995     0.2090
+## 10 Tratamiento_1      Bazo        1         0.5362         0.2263     0.3099
+## 11 Tratamiento_1      Bazo        2         0.9051         0.6955     0.2096
+## 12 Tratamiento_1      Bazo        3         0.7878         0.6688     0.1190
+## 13 Tratamiento_1      Bazo        4         0.7737         0.8991    -0.1254
+## 14 Tratamiento_1      Bazo        5         0.6967         0.5656     0.1311
+## 15 Tratamiento_1      Bazo        6         0.8641         0.6415     0.2226
+## 16 Tratamiento_1      Bazo        7         0.6466         0.7976    -0.1510
+## 17 Tratamiento_1      Bazo        8         0.7837         0.7712     0.0125
+## 18 Tratamiento_1      Bazo        9         0.8835         0.8317     0.0518
+## 19 Tratamiento_2 Peritoneo        1         0.8496         0.8077     0.0419
+## 20 Tratamiento_2 Peritoneo        2         0.0272         0.5407    -0.5135
+## 21 Tratamiento_2 Peritoneo        3          0.176         0.3854    -0.2094
+## 22 Tratamiento_2 Peritoneo        4          0.746         0.5056     0.2404
+## 23 Tratamiento_2 Peritoneo        5         0.3684         0.4481    -0.0797
+## 24 Tratamiento_2 Peritoneo        6         0.2465         0.5844    -0.3379
+## 25 Tratamiento_2 Peritoneo        7         0.5735         0.6546    -0.0811
+## 26 Tratamiento_2 Peritoneo        8         0.4187         0.7458    -0.3271
+## 27 Tratamiento_2 Peritoneo        9         0.6904         0.8864    -0.1960
+## 28 Tratamiento_2      Bazo        1         0.4382         0.6063    -0.1681
+## 29 Tratamiento_2      Bazo        2         0.8244         0.6299     0.1945
+## 30 Tratamiento_2      Bazo        3         0.9378         0.9087     0.0291
+## 31 Tratamiento_2      Bazo        4         0.8538          0.897    -0.0432
+## 32 Tratamiento_2      Bazo        5         0.7593         0.7379     0.0214
+## 33 Tratamiento_2      Bazo        6         0.8237         0.9294    -0.1057
+## 34 Tratamiento_2      Bazo        7         0.7424         0.8168    -0.0744
+## 35 Tratamiento_2      Bazo        8         0.8458         0.6317     0.2141
+## 36 Tratamiento_2      Bazo        9         0.9882         0.8268     0.1614</code></pre>
 </div>
 </div>
 
