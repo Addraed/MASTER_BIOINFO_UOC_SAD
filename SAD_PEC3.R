@@ -148,8 +148,8 @@ library(GGally)
 library(Hmisc)
 library(corrplot)
 library(PerformanceAnalytics)
-
-corrplot(round(cor(dataMurineCorrelacion),1),method="number",type = "upper") # Gráfico con matriz de correlacion
+round(cor(dataMurineCorrelacion),2)
+corrplot(round(cor(dataMurineCorrelacion),2),method="number",type = "upper") # Gráfico con matriz de correlacion
 
 cat("Las mayores correlaciones se encuentran en la misma region, por ejemplo entre el antigeno 4 y 5 del peritoneo")
 
@@ -202,3 +202,4 @@ probData
 
 # utilizar el siguiente código para renderizar el archivo html, en lugar del botón knit
 rmarkdown::render("C:/Users/addra/Documents/github/MASTER_BIOINFO_UOC_SAD/PEC_3_SAD.Rmd")
+

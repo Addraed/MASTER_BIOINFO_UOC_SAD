@@ -256,9 +256,9 @@ for (i in regionVector){
       
       normFrame <- subset(dataMurine,(dataMurine$Grupo == Num1[1] & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
       prob <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
-      print(prob)
+      #print(prob)
       Num1 <- c(j,i,k,prob)
-      print(Num1)
+      #print(Num1)
       probData <- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
       
     }
@@ -279,10 +279,10 @@ regionVector <- c("Peritoneo","Bazo") # Regiones posibles
 for (i in regionVector){
   for (j in groupVector){
       Num1 <- c(j,i)
-      print(Num1)
+      #print(Num1)
       probabilidadMax <-  subset(probData, (probData$Grupo == j & probData$Region == i))
       colnames(probabilidadMax) <- c("Grupo","Region","Antigeno","Probabilidad_Max") # Cambiar nombre de las columnas del Base Frame
-      print(probabilidadMax)
+      #print(probabilidadMax)
       probMax <-  rbind(probMax,subset(probabilidadMax, probabilidadMax$Probabilidad == max(probabilidadMax$Probabilidad)))
     
   }
@@ -329,13 +329,13 @@ for (i in regionVector){
     for (k in 1:9){
      
       normFrame <- subset(dataMurine,(dataMurine$Grupo == "A" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
-      prob1 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob1 <- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       normFrame <- subset(dataMurine,(dataMurine$Grupo == "B" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
-      prob2 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob2 <- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       
       
       Num1 <- c("Tratamiento_1",i,k,prob1,prob2)
-      print(Num1)
+      #print(Num1)
       probData <- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
   }
 }
@@ -343,11 +343,11 @@ for (i in regionVector){
 for (i in regionVector){
     for (k in 1:9){
       normFrame <- subset(dataMurine,(dataMurine$Grupo == "C" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
-      prob3 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob3 <- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       normFrame <- subset(dataMurine,(dataMurine$Grupo == "D" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
-      prob4 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      prob4 <- round(1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE),4) # Calcular probabilidad de que exista reestimulacion
       Num1 <- c("Tratamiento_2",i,k,prob3,prob4)
-      print(Num1)
+      #print(Num1)
       probData <- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
       
   }
@@ -358,7 +358,7 @@ for (i in 1:nrow(probData)){
 }
 probData$Diferencia <- difference  # Añadir las diferencias entre Reestimulacion del grupo con tumor y sin tumor al Frame
 
-colnames(probData) <- c("Grupo","Region","Antigeno","Probabilidad_Con_Tumor","Probabilidad_Sin_Tumor","Diferencia") # Cambiar nombre de las columnas del Base Frame
+colnames(probData) <- c("Grupo","Region","Antigeno","Prob_Con_Tumor","Prob_Sin_Tumor","Diferencia") # Cambiar nombre de las columnas del Base Frame
 
 cat("Las diferencias entre reestimulaciones de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor")
 probData
@@ -496,7 +496,13 @@ rect.hclust(hc_div_murine,k=10,border=2:10)
 
 
 ## Apartado 8
-```{r}
+```{r echo=FALSE}
+cat("1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.")
+round(cor(dataMurineCorrelacion),2)
+
+cat("2 - No todos los antigenos tienen más respuesta en los grupo con tumor, se debe a que algunos de los antigenos solo tienen reestimulacion con el tratamiento A (1,2,3,8) y otros con el tratamiento B (4,5,6,7,9")
+probData
+
 
 ```
 
