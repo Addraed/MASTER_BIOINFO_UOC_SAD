@@ -115,7 +115,7 @@ for (i in regionVector){
       Num1 <- c(j,i)
       print(Num1)
       probabilidadMax <-  subset(probData, (probData$Grupo == j & probData$Region == i))
-      colnames(probabilidadMax) <- c("Grupo","Región","Antigeno","Probabilidad_Max") # Cambiar nombre de las columnas del Base Frame
+      colnames(probabilidadMax) <- c("Grupo","Region","Antigeno","Probabilidad_Max") # Cambiar nombre de las columnas del Base Frame
       print(probabilidadMax)
       probMax <-  rbind(probMax,subset(probabilidadMax, probabilidadMax$Probabilidad == max(probabilidadMax$Probabilidad)))
     
@@ -199,3 +199,6 @@ colnames(probData) <- c("Grupo","Region","Antigeno","Probabilidad_Con_Tumor","Pr
 
 cat("Las diferencias entre reestimulaciones de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor")
 probData
+
+# utilizar el siguiente código para renderizar el archivo html, en lugar del botón knit
+rmarkdown::render("C:/Users/addra/Documents/github/MASTER_BIOINFO_UOC_SAD/PEC_3_SAD.Rmd")
