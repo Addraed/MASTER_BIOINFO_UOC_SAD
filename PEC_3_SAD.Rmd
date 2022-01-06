@@ -390,19 +390,9 @@ aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=mean)
 ##Desviación típica de reestimulación por grupos de tratamiento
 aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
 
-
-
-opar <- par(no.readonly = TRUE)
-
-par(mar = c(5, 5, 4, 14))
-boxplot(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Grupo, data=dataMurineNumeric, id.method="y")
-legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
-
-on.exit(par(opar))
-
 library(ggplot2)
 
-plotMurine <- ggplot(dataMurine, aes(x=Grupo, y=Reestimulacion,fill = Antigeno)) + 
+plotMurine <- ggplot(dataMurineNumeric, aes(x=Grupo, y=Reestimulacion, fill= Antigeno)) + 
   geom_boxplot()+stat_summary(fun = median)
 plotMurine + facet_wrap( ~ Grupo, scales="free")
 
