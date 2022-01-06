@@ -33,8 +33,6 @@ dataMurine <- read.csv(csvFile,header = TRUE, sep = ",") ## Introducir datos
 
 ## Apartado 2
 
-Texto aquí
-
 ```{r ej2}
 head(dataMurine) # Mostrar datos
 
@@ -48,15 +46,56 @@ unique(groupNames) ## Comprobar que los labels estan introducidos correctamente
 ```
 
 ## Apartado 3
+
+
 ```{r}
 # ?Cuantos valores N/A se encuentran en la Base de Datos? 
-# Creo que se piden cuestiones como estas
 cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la base de datos") # Contar valores N/A
 
-# Calcular la media de la reestimulacion de cada grupo
-# Boxplot con los valores de reestimulacion por grupos
+# A partir de un nuevo frame con solamente el grupo A (Tratamiento A con tumor) y de la region Peritoneo, Que media de reestimulacion es superior?
+dataMurineA <- subset(dataMurine,(dataMurine$Grupo =="A" & dataMurine$Region == "Peritoneo"))
+dataMurineA <- na.omit(dataMurineA) #Eliminar valores N/A
+aggregate(dataMurineA$Reestimulacion, list(dataMurineA$Antigeno), FUN=mean)
 
 
+#Eliminar valores N/A
+dataMurine <- na.omit(dataMurine) 
+
+
+
+
+
+```
+
+#### Crear una funcion que dado un grupo, una región, un antigeno, escriba en un csv junto con la informacion de entrada, la media, mediana, desviacion estandard y los valores maximos minimos.
+
+```{r}
+
+functionSummary <- function(NumGrupo,NumRegion,NumAntigeno){
+  resultPath <- c(getwd(),"/","Output_PEC3.csv") ## Leer ruta para cargar base de datos
+  resultFile <- paste0(resultPath,collapse = "")
+  resultFile
+  if (file.exists(resultFile) == FALSE){
+    file.create(resultFile)
+    values0 <- c("Grupo","Region","Antigeno","Media","Mediana","St.Dev","Max","Min")
+    
+    write.table(as.list(values0), file = resultFile ,col.names = FALSE, append=TRUE,sep = ",",row.names = FALSE)
+  }
+  
+  Num1 <- c(NumGrupo, NumRegion, NumAntigeno)
+  newFrame <- subset(dataMurine,(dataMurine$Grupo == Num1[1] & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
+  
+  values1 <- c(NumGrupo,NumRegion,NumAntigeno,round(mean(newFrame$Reestimulacion),3),round(median(newFrame$Reestimulacion),3),round(sd(newFrame$Reestimulacion),3),round(max(newFrame$Reestimulacion),3),round(min(newFrame$Reestimulacion),3))
+  write.table(as.list(values1), file = resultFile ,col.names = FALSE, append=TRUE,sep = ",",row.names = FALSE)
+  values1
+  
+}
+
+functionSummary("A","Peritoneo",1)
+
+
+#Guardamos una copia de los datos sin labels ni levels para posterior uso:
+dataMurineBackup<-dataMurine
 ```
 
 
@@ -67,8 +106,9 @@ cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la 
 #cambios de clase a ciertas variables para poder trabajar con ellas, de manera más clara
 dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"))  
 dataMurine$Region<- factor(dataMurine$Region,levels = c("Peritoneo", "Bazo"))
-dataMurine$Antigeno<- factor(dataMurine$Antigeno,levels = c("1", "2","3"))
-dataMurine=na.omit(dataMurine)# eliminación de valores NA
+dataMurine$Antigeno <- as.factor(dataMurine$Antigeno)
+
+
 summary(dataMurine) #resumen parametrico de las variables
 ``` 
 #### A continuación una representación de las diferentes variables:
@@ -84,6 +124,15 @@ plot(dataMurine$Region,col= "yellow", xlab= "Región") #el numero de individuos 
 
 
 plot(dataMurine$Grupo,dataMurine$Reestimulacion,type='o', col = "green", xlab= "Grupos", ylab= "Reestimulación") #la reestimulación por cada grupo del estudio
+
+
+
+# Boxplot con los valores de reestimulacion por grupo, agrupado por tipo de antigeno
+library(ggplot2)
+
+plotMurine <- ggplot(dataMurine, aes(x=Grupo, y=Reestimulacion,fill = Antigeno)) + 
+  geom_boxplot()+stat_summary(fun = median)
+plotMurine + facet_wrap( ~ Grupo, scales="free")
 ```
 
 
@@ -102,25 +151,24 @@ aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulaci
 #### Complementando el apartado anterior, elaborar un análisis de regresión de dos conjuntos de variables (LAB2 y Ejercicio 6 de la PEC1). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada.
 ```{r}
 str(dataMurine)
-```
-
-```{r}
 summary(dataMurine)
 ```
 
 ```{r}
-dataMurine$Grupo<-as.numeric(dataMurine$Grupo)
-dataMurine$Region<-as.numeric(dataMurine$Region)
-dataMurine$Antigeno<-as.numeric(dataMurine$Antigeno)
-summary(dataMurine) 
+dataMurineNumeric<-dataMurine
+dataMurineNumeric$Grupo<-as.numeric(dataMurine$Grupo)
+dataMurineNumeric$Region<-as.numeric(dataMurine$Region)
+dataMurineNumeric$Antigeno<-as.numeric(dataMurine$Antigeno)
+summary(dataMurineNumeric) 
 ```
 
 ```{r}
-cor(x=dataMurine[2:5],method="pearson"); pairs(dataMurine[2:5]) #Tenemos en cuenta solo las variables no los IDs de los ratones ya que no aportan nada ahora mismo
+cor(x=dataMurineNumeric[2:5],method="pearson"); pairs(dataMurineNumeric[2:5])
+# Tenemos en cuenta solo las variables no los IDs de los ratones ya que no aportan nada ahora mismo
 ```
 
 ```{r}
-murine_rl=lm(formula= Reestimulacion~Grupo,data=dataMurine)
+murine_rl=lm(formula= Reestimulacion~Grupo,data=dataMurineNumeric)
 summary(murine_rl)
 ```
 #### Representación del conjunto de variables:
@@ -128,14 +176,14 @@ summary(murine_rl)
 opar <- par(no.readonly = TRUE)
 
 par(mar = c(5, 5, 4, 14))
-plot(dataMurine$Grupo,dataMurine$Reestimulacion, xlab="Grupo", ylab="Reestimulación")
+plot(dataMurineNumeric$Grupo,dataMurineNumeric$Reestimulacion, xlab="Grupo", ylab="Reestimulación")
 abline(murine_rl)
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 on.exit(par(opar))
 ```
 
 ```{r}
-murine_rm<-lm(dataMurine$Reestimulacion~dataMurine$Grupo + dataMurine$Region+dataMurine$Antigeno,data=dataMurine[2:5])
+murine_rm<-lm(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Grupo + dataMurineNumeric$Region+dataMurineNumeric$Antigeno,data=dataMurineNumeric[2:5])
 summary(murine_rm)
 ```
 
@@ -145,14 +193,14 @@ step(object=murine_rm,direction ="both", trace=1) # Análisis de los mejores pre
 
 ```{r}
 #Se obtiene el modelo de regresión con los mejores predictores
-murine_rm<-lm(formula = dataMurine$Reestimulacion~dataMurine$Region + dataMurine$Antigeno, data = dataMurine[2:5])
+murine_rm<-lm(formula = dataMurineNumeric$Reestimulacion~dataMurineNumeric$Region + dataMurineNumeric$Antigeno, data = dataMurineNumeric[2:5])
 summary(murine_rm)
 ```
 
 ```{r}
-#definimos los vectores de las variables lage y lbase y los guardamos en un dataframe
-antigeno_murine<-c(dataMurine$Antigeno)
-raton_murine<-c(+dataMurine$Raton)
+#definimos los vectores de las variables antigeno y raton y los guardamos en un dataframe
+antigeno_murine<-c(dataMurineNumeric$Antigeno)
+raton_murine<-c(dataMurineNumeric$Raton)
 df_murine<-data.frame(antigeno_murine,raton_murine)
 #Primeros registros:
 head(df_murine)
@@ -175,46 +223,145 @@ require(nortest)
 by(data=df_murine,INDICES = df_murine$antigeno_murine,FUN=function(x){lillie.test(x$raton_murine )})
 ```
 
-```{r}
-library(cluster)
-d_agl_murine<-dist(dataMurine,method="euclidean")
-hc_agl_murine<-hclust(d_agl_murine,method="complete") 
-plot(hc_agl_murine,cex=0.6,hang=-1, main ="Dendograma de cluster") 
-```
-
-```{r}
-##Agrupamiento divisional jerárquico.
-hc_agl_murine<-agnes(dataMurine,method="complete") 
-pltree(hc_agl_murine,cex=0.6,hang=-1,main="Dendograma de agnes") 
-
-```
-
-#### Coeficiente de aglomeración
-```{r, echo=FALSE}
-hc_agl_murine$ac 
-```
-
-##### Coeficiente próximo a 1
-
-#### Agrupamiento divisional jerárquico
-```{r}
-
-hc_div_murine<-diana(dataMurine) ##calculamos los clústeres jerárquicos
-pltree(hc_div_murine,cex=0.6,hang=-1,main="Dendograma de Diana") 
-```
-
-### Coeficiente de división:
-```{r}
-hc_div_murine$dc # coeficiente también próximo a 1
-```
-
-```{r}
-pltree(hc_div_murine,hang=-1,cex=0.6)
-rect.hclust(hc_div_murine,k=10,border=2:10) # por último se asocian los agrupamiento de datos
-```
-
 ## Apartado 6 
+
+#### Realizar, a partir de los conceptos trabajados en el LAB4 y la PEC2, un estudio probabilistico (a eleccion propia) de al menos 3 de las variables, que ayude a esclarecer cuestiones de relevancia que se plantean en los ambitos de accion estudiados.
 ```{r}
+# Calcular las diferentes probabilidades de obtener reestimulacion (Reestimulacion > 100) de cada grupo para el antigeno 1
+
+# Recuperamos los datos del principio del ejercicio 3 que no han sufrido cambios de clase
+rm(dataMurine)
+dataMurine<-dataMurineBackup
+
+
+#Cargar paquetes
+library(readxl)
+library(dplyr)
+library(ggplot2)
+library(GGally)
+library(Hmisc)
+library(corrplot)
+library(PerformanceAnalytics)
+
+# Nuevo data frame para almacenar los resultados
+probData <- data.frame()
+
+groupVector <- c("A","B","C","D","I","J") # Grupos posibles
+regionVector <- c("Peritoneo","Bazo") # Regiones posibles
+
+for (i in regionVector){
+  for (j in groupVector){
+    for (k in 1:9){
+      Num1 <- c(j,i,k)
+      
+      normFrame <- subset(dataMurine,(dataMurine$Grupo == Num1[1] & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
+      prob <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      print(prob)
+      Num1 <- c(j,i,k,prob)
+      print(Num1)
+      probData <- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
+      
+    }
+  }
+}
+colnames(probData) <-c("Grupo","Region","Antigeno","Probabilidad") # Cambiar nombre de las columnas del Base Frame
+```
+
+#### - ¿A que antigeno responde mas cada grupo?
+```{r}
+
+probMax <- filter(probData, Grupo == "A" , Region == "Peritoneo")
+probMax <- data.frame()
+
+groupVector <- c("A","B","C","D","I","J") # Grupos posibles
+regionVector <- c("Peritoneo","Bazo") # Regiones posibles
+
+for (i in regionVector){
+  for (j in groupVector){
+      Num1 <- c(j,i)
+      print(Num1)
+      probabilidadMax <-  subset(probData, (probData$Grupo == j & probData$Region == i))
+      colnames(probabilidadMax) <- c("Grupo","Region","Antigeno","Probabilidad_Max") # Cambiar nombre de las columnas del Base Frame
+      print(probabilidadMax)
+      probMax <-  rbind(probMax,subset(probabilidadMax, probabilidadMax$Probabilidad == max(probabilidadMax$Probabilidad)))
+    
+  }
+}
+colnames(probMax) <- c("Grupo","Region","Antigeno","Probabilidad_Max") # Cambiar nombre de las columnas del Base Frame
+
+cat("La siguiente tabla muestra que antigeno tiene mas reestimulacion para cada grupo y region:")
+probMax
+
+# Los grupos responden a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
+```
+
+```{r}
+#Se verifica si existe corelacion entre los mismos antigenos que se encuentran en el peritoneo y en el bazo
+
+# Para ello se cargan los mismos datos pero agrupados en columnas
+
+folderPathCorrelacion <- c(getwd(),"/","DataBase_PEC3_Ejercicio6.3.csv") ## Leer ruta para cargar base de datos
+csvFileCorrelacion <- paste0(folderPathCorrelacion,collapse = "")
+dataMurineCorrelacion <- read.csv(csvFileCorrelacion,header = TRUE, sep = ",") ## Introducir datos
+dataMurineCorrelacion <- na.omit(dataMurineCorrelacion) #Eliminar valores N/A
+
+dataMurineCorrelacion$Grupo <- NULL # Eliminar para poder hacer la matrix de correlacion
+dataMurineCorrelacion$Raton <- NULL # Eliminar para poder hacer la matrix de correlacion
+
+
+corrplot(round(cor(dataMurineCorrelacion),1),method="number",type = "upper") # Gráfico con matriz de correlacion
+
+cat("Las mayores correlaciones se encuentran en la misma region, por ejemplo entre el antigeno 4 y 5 del peritoneo")
+```
+
+#### - La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
+```{r}
+
+
+# Se comparan las probabilidades de tener reestimulacion entre los grupos A y B, que pertenecen al mismo tratamiento, y los grupos C y D
+
+# Nuevo data frame para almacenar los resultados
+probData <- data.frame()
+
+regionVector <- c("Peritoneo","Bazo") # Regiones posibles
+
+for (i in regionVector){
+    for (k in 1:9){
+     
+      normFrame <- subset(dataMurine,(dataMurine$Grupo == "A" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
+      prob1 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      normFrame <- subset(dataMurine,(dataMurine$Grupo == "B" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
+      prob2 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      
+      
+      Num1 <- c("Tratamiento_1",i,k,prob1,prob2)
+      print(Num1)
+      probData <- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
+  }
+}
+
+for (i in regionVector){
+    for (k in 1:9){
+      normFrame <- subset(dataMurine,(dataMurine$Grupo == "C" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
+      prob3 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      normFrame <- subset(dataMurine,(dataMurine$Grupo == "D" & dataMurine$Region == Num1[2] & dataMurine$Antigeno == Num1[3]))
+      prob4 <- 1-pnorm(100,mean = mean(normFrame$Reestimulacion),sd = sd(normFrame$Reestimulacion),log = FALSE) # Calcular probabilidad de que exista reestimulacion
+      Num1 <- c("Tratamiento_2",i,k,prob3,prob4)
+      print(Num1)
+      probData <- rbind(probData,Num1) # Anadir resultado en un base frame junto con los datos de cada muestra
+      
+  }
+}
+difference <- c()
+for (i in 1:nrow(probData)){
+  difference[i] <- as.numeric(probData[i,4])-as.numeric(probData[i,5]) # Calcular la diferencia de cada Antigeno/Region
+}
+probData$Diferencia <- difference  # Añadir las diferencias entre Reestimulacion del grupo con tumor y sin tumor al Frame
+
+colnames(probData) <- c("Grupo","Region","Antigeno","Probabilidad_Con_Tumor","Probabilidad_Sin_Tumor","Diferencia") # Cambiar nombre de las columnas del Base Frame
+
+cat("Las diferencias entre reestimulaciones de cada grupo se muestran en la siguiente tabla, para aquellos grupos donde la diferencia sea positiva, existe mayor reestimulacion en los grupos con tumor")
+probData
 
 ```
 
@@ -225,8 +372,8 @@ rect.hclust(hc_div_murine,k=10,border=2:10) # por último se asocian los agrupam
 
 
 ```{r}
-grupos<-c(dataMurine$Grupo)
-reestimulacion<-c(dataMurine$Reestimulacion)
+grupos<-c(dataMurineNumeric$Grupo)
+reestimulacion<-c(dataMurineNumeric$Reestimulacion)
 df_murine_anova<-data.frame(grupos,reestimulacion) #definimos el conjunto de datos
 head(df_murine_anova,4) #mostramos la información del data frame
 
@@ -238,9 +385,9 @@ table(df_murine_anova$grupo) #número de observaciones por cada grupo
 
 ```{r}
 
-##Media de pesos por raza
+##Media de reestimuación por grupos de tratamiento
 aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=mean)
-##Desviación típica de pesos por raza
+##Desviación típica de reestimulación por grupos de tratamiento
 aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
 
 
@@ -248,15 +395,22 @@ aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
 opar <- par(no.readonly = TRUE)
 
 par(mar = c(5, 5, 4, 14))
-boxplot(dataMurine$Reestimulacion~dataMurine$Grupo, data=dataMurine, id.method="y")
+boxplot(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Grupo, data=dataMurineNumeric, id.method="y")
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 
 on.exit(par(opar))
 
+library(ggplot2)
+
+plotMurine <- ggplot(dataMurine, aes(x=Grupo, y=Reestimulacion,fill = Antigeno)) + 
+  geom_boxplot()+stat_summary(fun = median)
+plotMurine + facet_wrap( ~ Grupo, scales="free")
+
 ```
 
+### Estudio de normalidad
 ```{r}
-#Estudio de normalidad
+
 
 par(mfrow=c(3,3))
 qqnorm(df_murine_anova[df_murine_anova$grupos==1,"reestimulacion"],main=1)
@@ -277,9 +431,9 @@ qqline(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"])
 
 ```{r}
 ##Test Kolmogorov-Smirnov
-##Instalaremos el paquete nortest que contiene las funciones a aplicar
+##Instalamos el paquete nortest que contiene las funciones a aplicar
 require(nortest)
-## Loading required package: nortest
+## Utilizamos dicho paquetae sobre el dataframe anterior
 by(data=df_murine_anova,INDICES =
 df_murine_anova$grupos,FUN=function(x){lillie.test(x$reestimulacion)})
 ```
@@ -303,27 +457,51 @@ plot(anova_murine)
 pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$grupos,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
 ```
 
-
+### Prueba de clustering/agrupamiento
 ```{r}
+library(cluster)
+d_agl_murine<-dist(dataMurineNumeric,method="euclidean")
+hc_agl_murine<-hclust(d_agl_murine,method="complete") 
+plot(hc_agl_murine,cex=0.6,hang=-1, main ="Dendograma de cluster") 
+```
+
+### Agrupamiento divisional jerárquico : Agnes
+```{r}
+
+hc_agl_murine<-agnes(dataMurineNumeric,method="complete") 
+pltree(hc_agl_murine,cex=0.6,hang=-1,main="Dendograma de agnes") 
 
 ```
 
-
-```{r}
-
+##### Coeficiente de aglomeración
+```{r, echo=FALSE}
+hc_agl_murine$ac 
 ```
 
+* Coeficiente próximo a 1
 
+### Agrupamiento divisional jerárquico : Diana
 ```{r}
 
+hc_div_murine<-diana(dataMurineNumeric) ##calculamos los clústeres jerárquicos
+pltree(hc_div_murine,cex=0.6,hang=-1,main="Dendograma de Diana") 
 ```
 
+##### Coeficiente de división:
+```{r}
+hc_div_murine$dc 
+```
 
+* coeficiente también próximo a 1 
+
+#### Por último se asocian los agrupamientos de datos
 ```{r}
 
+cluster_plot<-pltree(hc_div_murine,hang=-1,cex=0.6)
+rect.hclust(hc_div_murine,k=10,border=2:10)
+
+
 ```
-
-
 
 
 
