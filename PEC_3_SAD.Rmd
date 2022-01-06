@@ -33,6 +33,8 @@ dataMurine <- read.csv(csvFile,header = TRUE, sep = ",") ## Introducir datos
 
 ## Apartado 2
 
+#### Utilizando R, mostrar y explicar qué tipo de ficheros se han importado, las variables de estudio (tipo, clasificación, ...), así como todo aquello relevante para el estudio. Incluir capturas de pantalla y las instrucciones en R utilizadas para importar y mostrar los datos.
+
 ```{r ej2}
 head(dataMurine) # Mostrar datos
 
@@ -187,12 +189,14 @@ murine_rm<-lm(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Grupo + dataMur
 summary(murine_rm)
 ```
 
+#### Análisis de los mejores predictores
 ```{r}
-step(object=murine_rm,direction ="both", trace=1) # Análisis de los mejores predictores 
+step(object=murine_rm,direction ="both", trace=1)  
 ```
 
+Se obtiene el modelo de regresión con los mejores predictores
 ```{r}
-#Se obtiene el modelo de regresión con los mejores predictores
+
 murine_rm<-lm(formula = dataMurineNumeric$Reestimulacion~dataMurineNumeric$Region + dataMurineNumeric$Antigeno, data = dataMurineNumeric[2:5])
 summary(murine_rm)
 ```
@@ -267,7 +271,7 @@ for (i in regionVector){
 colnames(probData) <-c("Grupo","Region","Antigeno","Probabilidad") # Cambiar nombre de las columnas del Base Frame
 ```
 
-#### - ¿A que antigeno responde mas cada grupo?
+#### -     ¿A que antigeno responde mas cada grupo?
 ```{r}
 
 probMax <- filter(probData, Grupo == "A" , Region == "Peritoneo")
@@ -419,17 +423,18 @@ qqline(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"])
 
 ```
 
+#### Test Kolmogorov-Smirnov
 ```{r}
-##Test Kolmogorov-Smirnov
+
 ##Instalamos el paquete nortest que contiene las funciones a aplicar
 require(nortest)
-## Utilizamos dicho paquetae sobre el dataframe anterior
+## Utilizamos dicho paquete sobre el dataframe anterior
 by(data=df_murine_anova,INDICES =
 df_murine_anova$grupos,FUN=function(x){lillie.test(x$reestimulacion)})
 ```
-
+#### Test Fligner-Killen diagnosis homocedasticidad
 ```{r}
-##Test Fligner-Killen diagnosis homocedasticidad
+
 fligner.test(df_murine_anova$reestimulacion~df_murine_anova$grupos,df_murine_anova)
 ```
 
@@ -496,13 +501,15 @@ rect.hclust(hc_div_murine,k=10,border=2:10)
 
 
 ## Apartado 8
+#### 1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.
 ```{r echo=FALSE}
-cat("1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.")
+
 round(cor(dataMurineCorrelacion),2)
+```
 
-cat("2 - No todos los antigenos tienen más respuesta en los grupo con tumor, se debe a que algunos de los antigenos solo tienen reestimulacion con el tratamiento A (1,2,3,8) y otros con el tratamiento B (4,5,6,7,9")
+#### 2 - No todos los antigenos tienen más respuesta en los grupo con tumor, se debe a que algunos de los antigenos solo tienen reestimulacion con el tratamiento A (1,2,3,8) y otros con el tratamiento B (4,5,6,7,9)
+```{r echo=FALSE}
 probData
-
 
 ```
 
