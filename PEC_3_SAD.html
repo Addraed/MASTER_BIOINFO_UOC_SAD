@@ -1192,7 +1192,7 @@ aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)</code></pre>
 ## 6      6       30.69683</code></pre>
 <pre class="r"><code>library(ggplot2)
 
-plotMurine &lt;- ggplot(dataMurineNumeric, aes(x=Grupo, y=Reestimulacion, fill= Antigeno)) + 
+plotMurine &lt;- ggplot(dataMurineNumeric, aes(x=Grupo, y=Reestimulacion)) + 
   geom_boxplot()+stat_summary(fun = median)
 plotMurine + facet_wrap( ~ Grupo, scales=&quot;free&quot;)</code></pre>
 <pre><code>## Warning: Continuous x aesthetic -- did you forget aes(group=...)?</code></pre>
