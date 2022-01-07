@@ -51,13 +51,13 @@ unique(groupNames) ## Comprobar que los labels estan introducidos correctamente
 ## Apartado 3
 #### Con la Sección 2 de la PEC1 como base, elaborar y analizar una serie de cuestiones, que ayuden a explorar y a familiarizarse mejor con los datos de estudio. Además, en algunos casos, puede utilizarse la definición de funciones y el lenguaje SQL estudiado en el LAB3. 
 
-### 3.1 - ¿Cuantos valores N/A se encuentran en la Base de Datos? 
+#### 3.1 - ¿Cuantos valores N/A se encuentran en la Base de Datos? 
 ```{r}
 
 cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la base de datos") # Contar valores N/A
 ```
 
-### 3.2 - A partir de un nuevo frame con solamente el grupo A (Tratamiento A con tumor) y de la region Peritoneo, Que media de reestimulacion es superior?
+#### 3.2 - A partir de un nuevo frame con solamente el grupo A (Tratamiento A con tumor) y de la region Peritoneo, Que media de reestimulacion es superior?
 ```{r}
 dataMurineA <- subset(dataMurine,(dataMurine$Grupo =="A" & dataMurine$Region == "Peritoneo"))
 dataMurineA <- na.omit(dataMurineA) #Eliminar valores N/A
@@ -466,7 +466,7 @@ pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.ad
 
 ## 7.3 - Prueba de clustering/agrupamiento
 
-Tomamos como **objetivo la variable Antigeno** 
+##### Tomamos como **objetivo la variable Antigeno** 
 
 ```{r}
 pairs(dataMurineNumeric[2:5],col=dataMurineNumeric$Antigeno)
