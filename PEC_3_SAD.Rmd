@@ -423,7 +423,7 @@ df_murine_anova$antigeno,FUN=function(x){lillie.test(x$reestimulacion)})
 
 ##### Observamos que la normalidad no es homogenea en todos los grupos ya que el p-value de la mayoria es inferior a 0.05. Solo el grupo *"antigeno 9"* está al limite de aceptar la normalidad.
 
-Para evaluar la varianza constante entre los grupos (homocedasticidad) hay diferentes test que podemos aplicar en función de los resultados de normalidad. Al obtener **no normalidad**, utilizamos el test de Fligner-Killeen.
+##### Para evaluar la varianza constante entre los grupos (homocedasticidad) hay diferentes test que podemos aplicar en función de los resultados de normalidad. Al obtener **no normalidad**, utilizamos el test de Fligner-Killeen.
 
 #### Test Fligner-Killen 
 ```{r}
@@ -443,7 +443,7 @@ plot(anova_murine)
 
 ```
 
-Los resultados indican que puede haber **diferencias estadísticamente significativas entre los antigenos utilizados y la reestimulación**, por lo que utilizamos la corrección recomendada *Holm adjustment*
+##### Los resultados indican que puede haber **diferencias estadísticamente significativas entre los antigenos utilizados y la reestimulación**, por lo que utilizamos la corrección recomendada *Holm adjustment*
 ```{r}
 pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
 ```
