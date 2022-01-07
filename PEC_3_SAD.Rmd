@@ -494,10 +494,23 @@ round(cor(dataMurineCorrelacion),2)
 probData
 ```
 
-#### 8.3 - Tras un estudio ANOVA y de cluster de las variables, podemos concluir que:
+#### 8.3 - Tras un estudio de regresión, podemos concluir que:
 * Los antígenos tienen un impacto importante en cuanto a la reestimulación de macrófagos
+
+```{r}
+summary(murine_rm)
+```
+
+#### 8.4 - Tras un estudio ANOVA y de clustering de las variables, podemos concluir que:
+* Puede haber **diferencias estadísticamente significativas entre los antigenos utilizados y la reestimulación**. Necesitariamos utilizar el *Holm adjustment* para corregir lo mas posible dichas diferencias.
+```{r}
+pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
+```
+
 * No se encuentran agrupamientos claros en cuanto a clustering
 
 ```{r}
-
+plot(grupos_km$cluster)
 ```
+
+
