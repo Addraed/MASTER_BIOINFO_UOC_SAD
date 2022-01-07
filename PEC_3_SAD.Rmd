@@ -170,7 +170,7 @@ cor(x=dataMurineNumeric[2:5],method="pearson"); pairs(dataMurineNumeric[2:5])
 ```
 
 ```{r}
-murine_rl=lm(formula= Reestimulacion~Grupo,data=dataMurineNumeric)
+murine_rl=lm(formula= Reestimulacion~Region,data=dataMurineNumeric)
 summary(murine_rl)
 ```
 #### Representación del conjunto de variables:
@@ -178,14 +178,14 @@ summary(murine_rl)
 opar <- par(no.readonly = TRUE)
 
 par(mar = c(5, 5, 4, 14))
-plot(dataMurineNumeric$Grupo,dataMurineNumeric$Reestimulacion, xlab="Grupo", ylab="Reestimulación")
+plot(dataMurineNumeric$Region,dataMurineNumeric$Reestimulacion, xlab="Region", ylab="Reestimulación")
 abline(murine_rl)
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 on.exit(par(opar))
 ```
 
 ```{r}
-murine_rm<-lm(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Grupo + dataMurineNumeric$Region+dataMurineNumeric$Antigeno,data=dataMurineNumeric[2:5])
+murine_rm<-lm(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Region + dataMurineNumeric$Grupo+dataMurineNumeric$Antigeno,data=dataMurineNumeric[2:5])
 summary(murine_rm)
 ```
 
@@ -196,36 +196,10 @@ step(object=murine_rm,direction ="both", trace=1)
 
 Se obtiene el modelo de regresión con los mejores predictores
 ```{r}
-
 murine_rm<-lm(formula = dataMurineNumeric$Reestimulacion~dataMurineNumeric$Region + dataMurineNumeric$Antigeno, data = dataMurineNumeric[2:5])
 summary(murine_rm)
 ```
 
-```{r}
-#definimos los vectores de las variables antigeno y raton y los guardamos en un dataframe
-antigeno_murine<-c(dataMurineNumeric$Antigeno)
-raton_murine<-c(dataMurineNumeric$Raton)
-df_murine<-data.frame(antigeno_murine,raton_murine)
-#Primeros registros:
-head(df_murine)
-```
-
-```{r}
-table(df_murine$antigeno_murine) # diferencias en número de observaciones
-```
-
-```{r}
-aggregate(raton_murine~antigeno_murine,data=df_murine,FUN=mean) # calculo de media de edad en función de trt
-```
-
-```{r}
-boxplot(raton_murine~antigeno_murine,data=df_murine,id.method="y")
-```
-
-```{r}
-require(nortest)
-by(data=df_murine,INDICES = df_murine$antigeno_murine,FUN=function(x){lillie.test(x$raton_murine )})
-```
 
 ## Apartado 6 
 
@@ -374,54 +348,68 @@ probData
 ## Apartado 7
 #### Complementando el apartado anterior, elaborar un análisis ANOVA de dos conjuntos de variables (LAB5 y Ejercicio 6 de la PEC2). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada. Además, realizar una prueba cluster de las variables, y si existe un fuerte agrupamiento, elaborar un dendograma (LAB5).
 
+A partir del conjunto de datos dataMurine, vamos a estudiar la relación existente entre los grupos de estudio (tipos de tratamiento) y la reestimulación, dentro del marco de na prueba ANOVA.
+
+
 
 ```{r}
-grupos<-c(dataMurineNumeric$Grupo)
+antigeno<-c(dataMurineNumeric$Antigeno)
 reestimulacion<-c(dataMurineNumeric$Reestimulacion)
-df_murine_anova<-data.frame(grupos,reestimulacion) #definimos el conjunto de datos
+df_murine_anova<-data.frame(antigeno,reestimulacion) #definimos el conjunto de datos
 head(df_murine_anova,4) #mostramos la información del data frame
 
 ```
 
 ```{r}
-table(df_murine_anova$grupo) #número de observaciones por cada grupo
+table(df_murine_anova$antigeno) #número de observaciones por cada antigeno
 ```
 
 ```{r}
 
-##Media de reestimuación por grupos de tratamiento
-aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=mean)
-##Desviación típica de reestimulación por grupos de tratamiento
-aggregate(reestimulacion~grupos,data=df_murine_anova,FUN=sd)
+##Media de reestimuación por antigeno de tratamiento
+aggregate(reestimulacion~antigeno,data=df_murine_anova,FUN=mean)
+##Desviación típica de reestimulación por antigeno
+aggregate(reestimulacion~antigeno,data=df_murine_anova,FUN=sd)
 
 library(ggplot2)
 
-plotMurine <- ggplot(dataMurineNumeric, aes(x=Grupo, y=Reestimulacion)) + 
+plotMurine <- ggplot(dataMurineNumeric, aes(x=Antigeno, y=Reestimulacion)) + 
   geom_boxplot()+stat_summary(fun = median)
-plotMurine + facet_wrap( ~ Grupo, scales="free")
+plotMurine + facet_wrap( ~ Antigeno, scales="free")
 
 ```
 
-### Estudio de normalidad
+* Se observan valores atípicos pero la distribución de los grupos es bastante simétrica
+
+#### - La variable cuantitativa, en este caso reestimulación, ¿se distribuye de forma normal en cada grupo?
+
+##### Estudio de normalidad
 ```{r}
 
 
 par(mfrow=c(3,3))
-qqnorm(df_murine_anova[df_murine_anova$grupos==1,"reestimulacion"],main=1)
-qqline(df_murine_anova[df_murine_anova$grupos==1,"reestimulacion"])
-qqnorm(df_murine_anova[df_murine_anova$grupos==2,"reestimulacion"],main=2)
-qqline(df_murine_anova[df_murine_anova$grupos==2,"reestimulacion"])
-qqnorm(df_murine_anova[df_murine_anova$grupos==3,"reestimulacion"],main=3)
-qqline(df_murine_anova[df_murine_anova$grupos==3,"reestimulacion"])
-qqnorm(df_murine_anova[df_murine_anova$grupos==4,"reestimulacion"],main=4)
-qqline(df_murine_anova[df_murine_anova$grupos==4,"reestimulacion"])
-qqnorm(df_murine_anova[df_murine_anova$grupos==5,"reestimulacion"],main=5)
-qqline(df_murine_anova[df_murine_anova$grupos==5,"reestimulacion"])
-qqnorm(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"],main=6)
-qqline(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"])
-
+qqnorm(df_murine_anova[df_murine_anova$antigeno==1,"reestimulacion"],main=1)
+qqline(df_murine_anova[df_murine_anova$antigeno==1,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==2,"reestimulacion"],main=2)
+qqline(df_murine_anova[df_murine_anova$antigeno==2,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==3,"reestimulacion"],main=3)
+qqline(df_murine_anova[df_murine_anova$antigeno==3,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==4,"reestimulacion"],main=4)
+qqline(df_murine_anova[df_murine_anova$antigeno==4,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==5,"reestimulacion"],main=5)
+qqline(df_murine_anova[df_murine_anova$antigeno==5,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==6,"reestimulacion"],main=6)
+qqline(df_murine_anova[df_murine_anova$antigeno==6,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==7,"reestimulacion"],main=7)
+qqline(df_murine_anova[df_murine_anova$antigeno==7,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==8,"reestimulacion"],main=8)
+qqline(df_murine_anova[df_murine_anova$antigeno==8,"reestimulacion"])
+qqnorm(df_murine_anova[df_murine_anova$antigeno==9,"reestimulacion"],main=9)
+qqline(df_murine_anova[df_murine_anova$antigeno==9,"reestimulacion"])
 
 ```
+
+* A continuación realizaremos un test que acabará de determinar la normalidad de la distribución.Como nuestra muestra es superior a 50 observaciones, utilizamos el test de Kolmogorov-Smirnov.
 
 #### Test Kolmogorov-Smirnov
 ```{r}
@@ -430,26 +418,34 @@ qqline(df_murine_anova[df_murine_anova$grupos==6,"reestimulacion"])
 require(nortest)
 ## Utilizamos dicho paquete sobre el dataframe anterior
 by(data=df_murine_anova,INDICES =
-df_murine_anova$grupos,FUN=function(x){lillie.test(x$reestimulacion)})
-```
-#### Test Fligner-Killen diagnosis homocedasticidad
-```{r}
-
-fligner.test(df_murine_anova$reestimulacion~df_murine_anova$grupos,df_murine_anova)
+df_murine_anova$antigeno,FUN=function(x){lillie.test(x$reestimulacion)})
 ```
 
+##### Observamos que la normalidad no es homogenea en todos los grupos ya que el p-value de la mayoria es inferior a 0.05. Solo el grupo *"antigeno 9"* está al limite de aceptar la normalidad.
+
+Para evaluar la varianza constante entre los grupos (homocedasticidad) hay diferentes test que podemos aplicar en función de los resultados de normalidad. Al obtener **no normalidad**, utilizamos el test de Fligner-Killeen.
+
+#### Test Fligner-Killen 
 ```{r}
-##Estudio anova
-anova_murine<-aov(df_murine_anova$reestimulacion~df_murine_anova$grupos,data=df_murine_anova)
+
+fligner.test(df_murine_anova$reestimulacion~df_murine_anova$antigeno,df_murine_anova)
+```
+
+* Se detectan **no homogeneidad de varianzas**
+
+## Estudio ANOVA
+```{r}
+
+anova_murine<-aov(df_murine_anova$reestimulacion~df_murine_anova$antigeno,data=df_murine_anova)
 summary(anova_murine)
 
 plot(anova_murine)
 
 ```
 
-
+Los resultados indican que puede haber **diferencias estadísticamente significativas entre los antigenos utilizados y la reestimulación**, por lo que utilizamos la corrección recomendada *Holm adjustment*
 ```{r}
-pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$grupos,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
+pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
 ```
 
 ### Prueba de clustering/agrupamiento
