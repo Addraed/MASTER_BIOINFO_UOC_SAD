@@ -449,52 +449,26 @@ pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.ad
 ```
 
 ### Prueba de clustering/agrupamiento
+
+Tomamos como **objetivo la variable Antigeno** 
+
 ```{r}
-library(cluster)
-d_agl_murine<-dist(dataMurineNumeric,method="euclidean")
-hc_agl_murine<-hclust(d_agl_murine,method="complete") 
-plot(hc_agl_murine,cex=0.6,hang=-1, main ="Dendograma de cluster") 
+pairs(dataMurineNumeric[2:5],col=dataMurineNumeric$Antigeno)
+
+# Comprobamos el grado de correlación entre el resto de variables
+cordeg=cor(dataMurineNumeric[2:5])
+cordeg
 ```
 
-### Agrupamiento divisional jerárquico : Agnes
 ```{r}
-
-hc_agl_murine<-agnes(dataMurineNumeric,method="complete") 
-pltree(hc_agl_murine,cex=0.6,hang=-1,main="Dendograma de agnes") 
-
-```
-
-##### Coeficiente de aglomeración
-```{r, echo=FALSE}
-hc_agl_murine$ac 
-```
-
-* Coeficiente próximo a 1
-
-### Agrupamiento divisional jerárquico : Diana
-```{r}
-
-hc_div_murine<-diana(dataMurineNumeric) ##calculamos los clústeres jerárquicos
-pltree(hc_div_murine,cex=0.6,hang=-1,main="Dendograma de Diana") 
-```
-
-##### Coeficiente de división:
-```{r}
-hc_div_murine$dc 
-```
-
-* coeficiente también próximo a 1 
-
-#### Por último se asocian los agrupamientos de datos
-```{r}
-
-cluster_plot<-pltree(hc_div_murine,hang=-1,cex=0.6)
-rect.hclust(hc_div_murine,k=10,border=2:10)
-
+##Construimos los grupos de clústeres, crearemos 9  grupos que son los tipos de antigeno (*Antigeno*)
+#9 tipos de antigeno
+grupos_km=kmeans(dataMurineNumeric[2:5],9) 
+plot(grupos_km$cluster)
 
 ```
 
-
+##### Tras observar el anterior plot podemos decir que no se aprecia un fuerte agrupamiento, por tanto no se procede con la elaboración del dendrograma
 
 ## Apartado 8
 #### 1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.
