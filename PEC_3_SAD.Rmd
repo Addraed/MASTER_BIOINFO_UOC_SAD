@@ -170,7 +170,7 @@ cor(x=dataMurineNumeric[2:5],method="pearson"); pairs(dataMurineNumeric[2:5])
 ```
 
 ```{r}
-murine_rl=lm(formula= Reestimulacion~Region,data=dataMurineNumeric)
+murine_rl=lm(formula= Reestimulacion~Region,data=dataMurineNumeric[2:5])
 summary(murine_rl)
 ```
 #### Representación del conjunto de variables:
@@ -483,5 +483,6 @@ probData
 
 ```
 
+#### 3 - Tras un estudio ANOVA y de cluster de las variables, hemos visto que los antígenos tienen un impacto importante en cuanto a la reestimulación de macrófagos
 
 
