@@ -117,6 +117,7 @@ dataMurine$Antigeno <- as.factor(dataMurine$Antigeno)
 
 summary(dataMurine) #resumen parametrico de las variables
 ``` 
+
 #### 4.2 - Representación de las diferentes variables:
 
 ``` {r}
@@ -174,11 +175,13 @@ summary(dataMurineNumeric)
 cor(x=dataMurineNumeric[2:5],method="pearson"); pairs(dataMurineNumeric[2:5])
 # Tenemos en cuenta solo las variables no los IDs de los ratones ya que no aportan nada ahora mismo
 ```
+
 ### 5.2 - Regresión lineal
 ```{r}
 murine_rl=lm(formula= Reestimulacion~Region,data=dataMurineNumeric[2:5])
 summary(murine_rl)
 ```
+
 #### 5.2.1 - Representación del conjunto de variables:
 ```{r ,echo= FALSE}
 opar <- par(no.readonly = TRUE)
@@ -189,6 +192,7 @@ abline(murine_rl)
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 on.exit(par(opar))
 ```
+
 ### 5.3 - Regresión multiple
 ```{r}
 murine_rm<-lm(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Region + dataMurineNumeric$Grupo+dataMurineNumeric$Antigeno,data=dataMurineNumeric[2:5])
@@ -503,13 +507,13 @@ summary(murine_rm)
 
 #### 8.4 - Tras un estudio ANOVA y de clustering de las variables, podemos concluir que:
 * Puede haber **diferencias estadísticamente significativas entre los antigenos utilizados y la reestimulación**. Necesitariamos utilizar el *Holm adjustment* para corregir lo mas posible dichas diferencias.
-```{r}
+```{r , echo=FALSE}
 pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
 ```
 
 * No se encuentran agrupamientos claros en cuanto a clustering
 
-```{r}
+```{r , echo=FALSE}
 plot(grupos_km$cluster)
 ```
 
