@@ -11,8 +11,9 @@ library(ggplot2)
 ```
 
 # Apartado 1
+#### Buscar un conjunto de datos relacionados con la Bioestadística o la Bioinformática. Será necesario especificar la procedencia y la justificación de la elección de los datos.
 
-#### Estudiar la respuesta inmunologica innata ex vivo en dos poblaciones de macrofagos (bazo y peritoneo) frente a diferentes antigenos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, tambien se le suministro el tratamiento A y B en animales sin cancer. 
+### 1.1 - Estudiar la respuesta inmunologica innata ex vivo en dos poblaciones de macrofagos (bazo y peritoneo) frente a diferentes antigenos del tratamiento. Las muestras fueron tomadas del modelo murino que recibieron el tratamiento alternativo (A) y el de referencia (B). Para estudiar el efecto del tumor en la respuesta innata, tambien se le suministro el tratamiento A y B en animales sin cancer. 
 * ¿A que antigeno responden mas los macrofagos?
 * ¿Responden los macrofagos a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
 * ¿La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
@@ -48,13 +49,16 @@ unique(groupNames) ## Comprobar que los labels estan introducidos correctamente
 ```
 
 ## Apartado 3
+#### Con la Sección 2 de la PEC1 como base, elaborar y analizar una serie de cuestiones, que ayuden a explorar y a familiarizarse mejor con los datos de estudio. Además, en algunos casos, puede utilizarse la definición de funciones y el lenguaje SQL estudiado en el LAB3. 
 
-
+### 3.1 - ¿Cuantos valores N/A se encuentran en la Base de Datos? 
 ```{r}
-# ?Cuantos valores N/A se encuentran en la Base de Datos? 
-cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la base de datos") # Contar valores N/A
 
-# A partir de un nuevo frame con solamente el grupo A (Tratamiento A con tumor) y de la region Peritoneo, Que media de reestimulacion es superior?
+cat("Existen un total de",table(!is.na(dataMurine))["FALSE"],"valores N/A en la base de datos") # Contar valores N/A
+```
+
+### 3.2 - A partir de un nuevo frame con solamente el grupo A (Tratamiento A con tumor) y de la region Peritoneo, Que media de reestimulacion es superior?
+```{r}
 dataMurineA <- subset(dataMurine,(dataMurine$Grupo =="A" & dataMurine$Region == "Peritoneo"))
 dataMurineA <- na.omit(dataMurineA) #Eliminar valores N/A
 aggregate(dataMurineA$Reestimulacion, list(dataMurineA$Antigeno), FUN=mean)
@@ -64,12 +68,9 @@ aggregate(dataMurineA$Reestimulacion, list(dataMurineA$Antigeno), FUN=mean)
 dataMurine <- na.omit(dataMurine) 
 
 
-
-
-
 ```
 
-#### Crear una funcion que dado un grupo, una región, un antigeno, escriba en un csv junto con la informacion de entrada, la media, mediana, desviacion estandard y los valores maximos minimos.
+#### 3.3 - Crear una funcion que dado un grupo, una región, un antigeno, escriba en un csv junto con la informacion de entrada, la media, mediana, desviacion estandard y los valores maximos minimos.
 
 ```{r}
 
@@ -104,8 +105,11 @@ dataMurineBackup<-dataMurine
 ## Apartado 4
 
 #### Realizar un análisis descriptivo de los datos. El análisis debe incluir (tal y como aparece en la Sección 3 de la PEC1) un resumen paramétrico de los datos y su representación gráfica, que mejor defina y complemente cada una de dichas variables. 
+
+
+#### 4.1 - Cambios de clase a ciertas variables para poder trabajar con ellas, de manera más clara
 ```{r}
-#cambios de clase a ciertas variables para poder trabajar con ellas, de manera más clara
+
 dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"))  
 dataMurine$Region<- factor(dataMurine$Region,levels = c("Peritoneo", "Bazo"))
 dataMurine$Antigeno <- as.factor(dataMurine$Antigeno)
@@ -113,7 +117,7 @@ dataMurine$Antigeno <- as.factor(dataMurine$Antigeno)
 
 summary(dataMurine) #resumen parametrico de las variables
 ``` 
-#### A continuación una representación de las diferentes variables:
+#### 4.2 - Representación de las diferentes variables:
 
 ``` {r}
 par(mfrow=c(2,2))
@@ -138,7 +142,7 @@ plotMurine + facet_wrap( ~ Grupo, scales="free")
 ```
 
 
-#### Media por tratamientos (grupos A, B, C, D, I, J):
+#### 4.3 - Media por tratamientos (grupos A, B, C, D, I, J):
 ```{r, echo= FALSE}
 
 dataMurine$Grupo <- factor(dataMurine$Grupo, levels = c("A","B","C","D","I","J"),labels = c("Tratamiento A con tumor","Tratamiento A sin tumor","Tratamiento B con tumor","Tratamiento B sin tumor","Animal control con tumor","Animal control sin tumor") )  #cambio de los caracteres por labels para mejor lectura de los datos
@@ -151,6 +155,8 @@ aggregate(dataMurine[, 5], list(dataMurine$Grupo), mean) #medias de reestimulaci
 
 ## Apartado 5
 #### Complementando el apartado anterior, elaborar un análisis de regresión de dos conjuntos de variables (LAB2 y Ejercicio 6 de la PEC1). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada.
+
+### 5.1 - Analisis de regresión sobre las variables Reestimulacion y Region para ver si existe una relacion lineal entre ellos.
 ```{r}
 str(dataMurine)
 summary(dataMurine)
@@ -168,12 +174,12 @@ summary(dataMurineNumeric)
 cor(x=dataMurineNumeric[2:5],method="pearson"); pairs(dataMurineNumeric[2:5])
 # Tenemos en cuenta solo las variables no los IDs de los ratones ya que no aportan nada ahora mismo
 ```
-
+### 5.2 - Regresión lineal
 ```{r}
 murine_rl=lm(formula= Reestimulacion~Region,data=dataMurineNumeric[2:5])
 summary(murine_rl)
 ```
-#### Representación del conjunto de variables:
+#### 5.2.1 - Representación del conjunto de variables:
 ```{r ,echo= FALSE}
 opar <- par(no.readonly = TRUE)
 
@@ -183,13 +189,13 @@ abline(murine_rl)
 legend(x = "topright",inset = c(-0.8,0),legend=c("1= Tratamiento A con tumor","2= Tratamiento A sin tumor","3= Tratamiento B con tumor","4= Tratamiento B sin tumor","5= Animal control con tumor","6= Animal control sin tumor"), xpd = TRUE)
 on.exit(par(opar))
 ```
-
+### 5.3 - Regresión multiple
 ```{r}
 murine_rm<-lm(dataMurineNumeric$Reestimulacion~dataMurineNumeric$Region + dataMurineNumeric$Grupo+dataMurineNumeric$Antigeno,data=dataMurineNumeric[2:5])
 summary(murine_rm)
 ```
 
-#### Análisis de los mejores predictores
+#### 5.3.1 -Análisis de los mejores predictores
 ```{r}
 step(object=murine_rm,direction ="both", trace=1)  
 ```
@@ -204,8 +210,11 @@ summary(murine_rm)
 ## Apartado 6 
 
 #### Realizar, a partir de los conceptos trabajados en el LAB4 y la PEC2, un estudio probabilistico (a eleccion propia) de al menos 3 de las variables, que ayude a esclarecer cuestiones de relevancia que se plantean en los ambitos de accion estudiados.
+
+#### 6.1 - Calcular las diferentes probabilidades de obtener reestimulacion (Reestimulacion > 100) de cada grupo para el antigeno 1
+
 ```{r}
-# Calcular las diferentes probabilidades de obtener reestimulacion (Reestimulacion > 100) de cada grupo para el antigeno 1
+
 
 # Recuperamos los datos del principio del ejercicio 3 que no han sufrido cambios de clase
 rm(dataMurine)
@@ -245,7 +254,7 @@ for (i in regionVector){
 colnames(probData) <-c("Grupo","Region","Antigeno","Probabilidad") # Cambiar nombre de las columnas del Base Frame
 ```
 
-#### -     ¿A que antigeno responde mas cada grupo?
+#### 6.2 - ¿A que antigeno responde mas cada grupo?
 ```{r}
 
 probMax <- filter(probData, Grupo == "A" , Region == "Peritoneo")
@@ -273,8 +282,10 @@ probMax
 # Los grupos responden a los mismos antigenos que se encuentran en el peritoneo y en el bazo? 
 ```
 
+#### 6.3 - Se verifica si existe corelacion entre los mismos antigenos que se encuentran en el peritoneo y en el bazo:
+
 ```{r}
-#Se verifica si existe corelacion entre los mismos antigenos que se encuentran en el peritoneo y en el bazo
+
 
 # Para ello se cargan los mismos datos pero agrupados en columnas
 
@@ -292,7 +303,7 @@ corrplot(round(cor(dataMurineCorrelacion),1),method="number",type = "upper") # G
 cat("Las mayores correlaciones se encuentran en la misma region, por ejemplo entre el antigeno 4 y 5 del peritoneo")
 ```
 
-#### - La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
+#### 6.4 - La presencia de tumor en los animales modifica la respuesta a los distintos antigenos?
 ```{r}
 
 
@@ -348,14 +359,15 @@ probData
 ## Apartado 7
 #### Complementando el apartado anterior, elaborar un análisis ANOVA de dos conjuntos de variables (LAB5 y Ejercicio 6 de la PEC2). La elección de las variables, los resultados, así como su relación deben de estar correctamente justificada. Además, realizar una prueba cluster de las variables, y si existe un fuerte agrupamiento, elaborar un dendograma (LAB5).
 
-A partir del conjunto de datos dataMurine, vamos a estudiar la relación existente entre los grupos de estudio (tipos de tratamiento) y la reestimulación, dentro del marco de na prueba ANOVA.
 
 
+### 7.1 - A partir del conjunto de datos dataMurine:
+#### Vamos a estudiar la relación existente entre los grupos de estudio (tipos de tratamiento) y la reestimulación, dentro del marco de una prueba ANOVA.
 
 ```{r}
 antigeno<-c(dataMurineNumeric$Antigeno)
 reestimulacion<-c(dataMurineNumeric$Reestimulacion)
-df_murine_anova<-data.frame(antigeno,reestimulacion) #definimos el conjunto de datos
+df_murine_anova<-data.frame(antigeno,reestimulacion) 
 head(df_murine_anova,4) #mostramos la información del data frame
 
 ```
@@ -381,7 +393,7 @@ plotMurine + facet_wrap( ~ Antigeno, scales="free")
 
 * Se observan valores atípicos pero la distribución de los grupos es bastante simétrica
 
-#### - La variable cuantitativa, en este caso reestimulación, ¿se distribuye de forma normal en cada grupo?
+#### 7.1.1 - La variable cuantitativa, en este caso reestimulación, ¿se distribuye de forma normal en cada grupo?
 
 ##### Estudio de normalidad
 ```{r}
@@ -411,7 +423,7 @@ qqline(df_murine_anova[df_murine_anova$antigeno==9,"reestimulacion"])
 
 * A continuación realizaremos un test que acabará de determinar la normalidad de la distribución.Como nuestra muestra es superior a 50 observaciones, utilizamos el test de Kolmogorov-Smirnov.
 
-#### Test Kolmogorov-Smirnov
+#### 7.1.2 - Test Kolmogorov-Smirnov
 ```{r}
 
 ##Instalamos el paquete nortest que contiene las funciones a aplicar
@@ -425,7 +437,7 @@ df_murine_anova$antigeno,FUN=function(x){lillie.test(x$reestimulacion)})
 
 ##### Para evaluar la varianza constante entre los grupos (homocedasticidad) hay diferentes test que podemos aplicar en función de los resultados de normalidad. Al obtener **no normalidad**, utilizamos el test de Fligner-Killeen.
 
-#### Test Fligner-Killen 
+#### 7.1.3 - Test Fligner-Killen 
 ```{r}
 
 fligner.test(df_murine_anova$reestimulacion~df_murine_anova$antigeno,df_murine_anova)
@@ -433,7 +445,7 @@ fligner.test(df_murine_anova$reestimulacion~df_murine_anova$antigeno,df_murine_a
 
 * Se detectan **no homogeneidad de varianzas**
 
-## Estudio ANOVA
+## 7.2 - Estudio ANOVA
 ```{r}
 
 anova_murine<-aov(df_murine_anova$reestimulacion~df_murine_anova$antigeno,data=df_murine_anova)
@@ -448,7 +460,7 @@ plot(anova_murine)
 pairwise.t.test(x=df_murine_anova$reestimulacion,g=df_murine_anova$antigeno,p.adjust.method ="holm",pool.sd=TRUE,paired=FALSE,alternative="two.sided")
 ```
 
-### Prueba de clustering/agrupamiento
+## 7.3 - Prueba de clustering/agrupamiento
 
 Tomamos como **objetivo la variable Antigeno** 
 
@@ -471,18 +483,21 @@ plot(grupos_km$cluster)
 ##### Tras observar el anterior plot podemos decir que no se aprecia un fuerte agrupamiento, por tanto no se procede con la elaboración del dendrograma
 
 ## Apartado 8
-#### 1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.
+#### 8.1 - La mayor correlacion de reestimulacion entre antigenos se encuentran en la misma region, estos son del mismo tipo y responden a los mismos factores.
 ```{r echo=FALSE}
 
 round(cor(dataMurineCorrelacion),2)
 ```
 
-#### 2 - No todos los antigenos tienen más respuesta en los grupo con tumor, se debe a que algunos de los antigenos solo tienen reestimulacion con el tratamiento A (1,2,3,8) y otros con el tratamiento B (4,5,6,7,9)
+#### 8.2 - No todos los antigenos tienen más respuesta en los grupo con tumor, se debe a que algunos de los antigenos solo tienen reestimulacion con el tratamiento A (1,2,3,8) y otros con el tratamiento B (4,5,6,7,9)
 ```{r echo=FALSE}
 probData
-
 ```
 
-#### 3 - Tras un estudio ANOVA y de cluster de las variables, hemos visto que los antígenos tienen un impacto importante en cuanto a la reestimulación de macrófagos
+#### 8.3 - Tras un estudio ANOVA y de cluster de las variables, podemos concluir que:
+* Los antígenos tienen un impacto importante en cuanto a la reestimulación de macrófagos
+* No se encuentran agrupamientos claros en cuanto a clustering
 
+```{r}
 
+```
