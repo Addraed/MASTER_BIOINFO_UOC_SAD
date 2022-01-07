@@ -478,7 +478,7 @@ cordeg
 
 ```{r}
 ##Construimos los grupos de clústeres, crearemos 9  grupos que son los tipos de antigeno (*Antigeno*)
-#9 tipos de antigeno
+
 grupos_km=kmeans(dataMurineNumeric[2:5],9) 
 plot(grupos_km$cluster)
 
